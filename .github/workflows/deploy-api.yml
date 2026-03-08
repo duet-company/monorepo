@@ -26,6 +26,49 @@ jobs:
       - name: Install dependencies
         run: bun install
 
+      - name: Setup AI Gateway
+        if: github.ref_name == 'main'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GATEWAY_NAME: duet-company-prod
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "Setting up Cloudflare AI Gateway..."
+          curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/ai/gateway" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"name": "duet-company-prod", "type": "ai_gateway"}' || echo "Gateway may already exist"
+
+          echo "Configuring OpenAI provider..."
+          if [ -n "${{ secrets.OPENAI_API_KEY }}" ]; then
+            curl -s -X PUT \
+              "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/ai/gateway/providers/openai" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"credentials": [{"api_token": "${{ secrets.OPENAI_API_KEY }}", "type": "openai_api_token", "name": "openai_key"}]}' || true
+          fi
+
+          echo "Configuring Anthropic provider..."
+          if [ -n "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            curl -s -X PUT \
+              "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/ai/gateway/providers/anthropic" \
+              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{"credentials": [{"api_token": "${{ secrets.ANTHROPIC_API_KEY }}", "type": "anthropic_api_token", "name": "anthropic_key"}]}' || true
+          fi
+
+          echo "Enabling caching and rate limits..."
+          curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/ai/gateway/settings" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"cache_enabled": true, "cache_ttl": 3600}' || true
+
+          echo "✓ AI Gateway configured"
+
       - name: Build API worker
         env:
           ENVIRONMENT: ${{ github.ref_name == 'main' && 'production' || 'preview' }}

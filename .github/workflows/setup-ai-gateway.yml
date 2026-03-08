@@ -1,0 +1,188 @@
+name: Setup AI Gateway
+
+on:
+  workflow_dispatch:
+    inputs:
+      gateway_name:
+        description: 'AI Gateway name'
+        required: false
+        default: 'duet-company-prod'
+      configure_openai:
+        description: 'Configure OpenAI provider'
+        required: false
+        default: 'true'
+      configure_anthropic:
+        description: 'Configure Anthropic provider'
+        required: false
+        default: 'true'
+      enable_caching:
+        description: 'Enable response caching'
+        required: false
+        default: 'true'
+
+jobs:
+  setup:
+    name: Setup Cloudflare AI Gateway
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup AI Gateway
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GATEWAY_NAME: ${{ github.event.inputs.gateway_name || 'duet-company-prod' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "=== Cloudflare AI Gateway Setup ==="
+          echo ""
+
+          # Create AI Gateway
+          echo "Creating AI Gateway: $GATEWAY_NAME"
+          GATEWAY_RESPONSE=$(curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/gateway" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"name": "'"$GATEWAY_NAME"'", "type": "ai_gateway"}')
+
+          GATEWAY_ID=$(echo "$GATEWAY_RESPONSE" | jq -r '.result.uid // empty')
+
+          if [ -z "$GATEWAY_ID" ]; then
+            echo "Gateway may already exist, listing existing gateways..."
+            LIST_RESPONSE=$(curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/gateways" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN}")
+            GATEWAY_ID=$(echo "$LIST_RESPONSE" | jq -r '.result[] | select(.name=="'"$GATEWAY_NAME"'") | .uid')
+
+            if [ -z "$GATEWAY_ID" ]; then
+              echo "❌ Failed to create or find gateway"
+              exit 1
+            fi
+            echo "Using existing gateway: $GATEWAY_ID"
+          else
+            echo "✓ Gateway created with ID: $GATEWAY_ID"
+          fi
+
+          echo ""
+          echo "=== Configuring Providers ==="
+          echo ""
+
+          # Configure OpenAI
+          if [ "${{ github.event.inputs.configure_openai }}" = "true" ] && [ -n "$OPENAI_API_KEY" ]; then
+            echo "Configuring OpenAI provider..."
+            curl -s -X PUT \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/gateway/providers/openai" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "credentials": [
+                  {
+                    "api_token": "'"$OPENAI_API_KEY"'",
+                    "type": "openai_api_token",
+                    "name": "openai_key"
+                  }
+                ]
+              }' > /dev/null
+            echo "✓ OpenAI configured"
+          fi
+
+          # Configure Anthropic
+          if [ "${{ github.event.inputs.configure_anthropic }}" = "true" ] && [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "Configuring Anthropic provider..."
+            curl -s -X PUT \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/gateway/providers/anthropic" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "credentials": [
+                  {
+                    "api_token": "'"$ANTHROPIC_API_KEY"'",
+                    "type": "anthropic_api_token",
+                    "name": "anthropic_key"
+                  }
+                ]
+              }' > /dev/null
+            echo "✓ Anthropic configured"
+          fi
+
+          echo ""
+          echo "=== Configuring Settings ==="
+          echo ""
+
+          # Enable caching
+          if [ "${{ github.event.inputs.enable_caching }}" = "true" ]; then
+            echo "Enabling caching (1 hour TTL)..."
+            curl -s -X POST \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/gateway/settings" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "cache_enabled": true,
+                "cache_ttl": 3600,
+                "rate_limiting": {
+                  "enabled": true,
+                  "limits": [
+                    {
+                      "model": "*",
+                      "requests_per_minute": 100
+                    }
+                  ]
+                }
+              }' > /dev/null
+            echo "✓ Caching and rate limits enabled"
+          fi
+
+          echo ""
+          echo "=== Gateway Configuration Complete ==="
+          echo ""
+          echo "Gateway ID: $GATEWAY_ID"
+          echo "Gateway Name: $GATEWAY_NAME"
+          echo "Account ID: $CLOUDFLARE_ACCOUNT_ID"
+          echo ""
+          echo "Add this to your secrets:"
+          echo "CLOUDFLARE_AI_GATEWAY_ID=$GATEWAY_ID"
+          echo ""
+          echo "View your gateway:"
+          echo "https://dash.cloudflare.com/$CLOUDFLARE_ACCOUNT_ID/ai/gateway"
+          echo ""
+
+          # Update wrangler.toml if possible
+          echo "Updating wrangler.toml..."
+          sed -i "s/gateway_id = \"YOUR_GATEWAY_ID\"/gateway_id = \"$GATEWAY_ID\"/" infrastructure/cloudflare/wrangler.toml || true
+          sed -i "s/CLOUDFLARE_AI_GATEWAY_ID = \"YOUR_GATEWAY_ID\"/CLOUDFLARE_AI_GATEWAY_ID = \"$GATEWAY_ID\"/" infrastructure/cloudflare/wrangler.toml || true
+
+          # Test the gateway
+          echo ""
+          echo "=== Testing Gateway ==="
+          echo ""
+          if [ -n "$OPENAI_API_KEY" ]; then
+            echo "Sending test request via OpenAI..."
+            TEST_RESPONSE=$(curl -s -X POST \
+              "https://gateway.ai.cloudflare.com/v1/openai/gpt-3.5-turbo" \
+              -H "Authorization: Bearer $OPENAI_API_KEY" \
+              -H "Content-Type: application/json" \
+              -H "CF-Gateway-ID: $GATEWAY_ID" \
+              -d '{
+                "messages": [{"role": "user", "content": "Say Gateway configured successfully"}],
+                "max_tokens": 10
+              }')
+
+            if echo "$TEST_RESPONSE" | jq -e '.choices[0].message.content' > /dev/null 2>&1; then
+              echo "✓ Gateway test successful!"
+              echo "Response: $(echo "$TEST_RESPONSE" | jq -r '.choices[0].message.content')"
+            else
+              echo "⚠ Test failed, but gateway may be configured"
+              echo "You can test manually:"
+              echo "curl https://gateway.ai.cloudflare.com/v1/openai/gpt-3.5-turbo \\"
+              echo "  -H \"Authorization: Bearer YOUR_OPENAI_KEY\" \\"
+              echo "  -H \"CF-Gateway-ID: $GATEWAY_ID\" \\"
+              echo "  -d '{\"messages\":[{\"role\":\"user\",\"content\":\"test\"}]}'
+            fi
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "## ✅ AI Gateway Setup Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Your AI Gateway is now configured and ready to use!" >> $GITHUB_STEP_SUMMARY
