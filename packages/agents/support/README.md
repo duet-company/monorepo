@@ -5,6 +5,7 @@
 ## 🎯 Purpose
 
 Provides intelligent, context-aware customer support:
+
 - Answer common questions
 - Troubleshoot issues
 - Guide users through features
@@ -21,6 +22,7 @@ Provides intelligent, context-aware customer support:
 ## 🧠 Models
 
 Supports multiple LLM providers:
+
 - Claude (Anthropic)
 - GPT-4 (OpenAI)
 - GLM-5 (Z.AI)
@@ -28,6 +30,7 @@ Supports multiple LLM providers:
 ## 📚 Knowledge Base
 
 Integrates with:
+
 - [Documentation](../../docs/)
 - [Troubleshooting guides](../../playbook/operations/troubleshooting.md)
 - [FAQ](../../docs/support/faq.md)
@@ -70,6 +73,7 @@ python tests/evaluate_quality.py
 ## 📈 Metrics
 
 Tracks:
+
 - Resolution rate
 - Customer satisfaction
 - Escalation rate

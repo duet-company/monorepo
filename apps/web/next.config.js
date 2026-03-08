@@ -2,6 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ['@duet-company/ui', '@duet-company/shared', '@duet-company/config'],
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

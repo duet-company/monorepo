@@ -58,7 +58,8 @@ wrangler d1 execute duet-company-prod --command="SELECT * FROM users LIMIT 10"
 
 ## Environment Variables
 
-Configure these in `infrastructure/cloudflare/wrangler.toml` or via `wrangler secret`:
+Configure these in `infrastructure/cloudflare/wrangler.toml` or via
+`wrangler secret`:
 
 ```bash
 wrangler secret put OPENAI_API_KEY
@@ -69,6 +70,7 @@ wrangler secret put JWT_SECRET
 ## Monitoring
 
 View logs and metrics:
+
 ```bash
 # Tail worker logs
 wrangler tail --format pretty

@@ -5,6 +5,7 @@ Get Duet Company running locally in minutes.
 ## Prerequisites
 
 Ensure you have:
+
 - **Bun** >= 1.0.0
 - **Node.js** >= 20.0.0
 - **Python** >= 3.10
@@ -28,6 +29,7 @@ bun run dev
 ```
 
 This starts:
+
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8000
 - API Docs: http://localhost:8000/api/docs
@@ -35,6 +37,7 @@ This starts:
 ## Environment Setup
 
 ### Frontend (.env.local)
+
 ```bash
 cp apps/web/.env.example apps/web/.env.local
 ```
@@ -44,6 +47,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
 ### Backend (.env)
+
 ```bash
 cp apps/api/.env.example apps/api/.env
 ```
@@ -77,13 +81,13 @@ bun run lint
 
 ## Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start all apps |
-| `bun run build` | Build all packages |
-| `bun run test` | Run tests |
-| `bun run lint` | Run linter |
-| `bun run typecheck` | Type check |
+| Command             | Description        |
+| ------------------- | ------------------ |
+| `bun run dev`       | Start all apps     |
+| `bun run build`     | Build all packages |
+| `bun run test`      | Run tests          |
+| `bun run lint`      | Run linter         |
+| `bun run typecheck` | Type check         |
 
 ## Project Structure
 
@@ -107,12 +111,14 @@ duet-company/
 ## Troubleshooting
 
 ### Port already in use
+
 ```bash
 lsof -i :3000  # or :8000
 kill -9 <PID>
 ```
 
 ### Dependencies issues
+
 ```bash
 rm -rf node_modules bun.lockb
 bun install

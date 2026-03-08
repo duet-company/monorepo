@@ -4,7 +4,9 @@
 
 ## 🎯 Purpose
 
-Provides intelligent, context-aware customer support including answering questions, troubleshooting issues, guiding users through features, and escalating complex problems to human support.
+Provides intelligent, context-aware customer support including answering
+questions, troubleshooting issues, guiding users through features, and
+escalating complex problems to human support.
 
 ## 🚀 Usage
 
@@ -62,22 +64,22 @@ support:
     base: ${KNOWLEDGE_BASE}
     playbook: ${PLAYBOOK_PATH}
     faq: ${FAQ_PATH}
-  
+
   api:
     base_url: ${API_BASE_URL}
     key: ${API_KEY}
     timeout: 30
-  
+
   issues:
     tracker: ${ISSUE_TRACKER_URL}
     token: ${ISSUE_TRACKER_TOKEN}
     auto_create: true
-  
+
   llm:
     provider: ${LLM_PROVIDER}
     model: ${LLM_MODEL}
     api_key: ${LLM_API_KEY}
-  
+
   automation:
     max_context: ${MAX_CONTEXT_LENGTH}
     confidence_threshold: ${CONFIDENCE_THRESHOLD}
@@ -90,8 +92,7 @@ support:
 ### Database Connection Issue
 
 ```markdown
-Customer Question:
-"How do I connect my PostgreSQL database to the platform?"
+Customer Question: "How do I connect my PostgreSQL database to the platform?"
 
 Support Response:
 
@@ -105,20 +106,19 @@ To connect your PostgreSQL database:
    - Port: 5432
    - Database: your_database_name
    - Username: your_username
-   - Password: ********
+   - Password: **\*\*\*\***
 
 5. Click "Test Connection"
 6. Once verified, click "Save"
 
-Documentation: /docs/users/database-connection.md
-Troubleshooting: /playbook/operations/troubleshooting.md#database-connection
+Documentation: /docs/users/database-connection.md Troubleshooting:
+/playbook/operations/troubleshooting.md#database-connection
 ```
 
 ### Query Performance Issue
 
-```markdown
-Customer Question:
-"My query is running slowly, how can I optimize it?"
+````markdown
+Customer Question: "My query is running slowly, how can I optimize it?"
 
 Support Response:
 
@@ -128,7 +128,9 @@ For slow queries, try these optimizations:
    ```sql
    EXPLAIN <your-query>
    ```
-   Look for full table scans or missing indexes.
+````
+
+Look for full table scans or missing indexes.
 
 2. **Add Indexes**
    - Create indexes on WHERE clause columns
@@ -146,11 +148,13 @@ For slow queries, try these optimizations:
    - Reduce computation at query time
 
 Tools available:
+
 - Query Optimizer: /tools/optimize-query
 - Schema Explorer: /tools/explore-schema
 
 Documentation: /docs/guides/query-optimization.md
-```
+
+````
 
 ### Feature Request
 
@@ -181,19 +185,21 @@ Would you like to:
 I can create a feature request and link it to our roadmap.
 
 Documentation: /docs/features/cohort-retention.md
-```
+````
 
 ## 🐛 Troubleshooting
 
 ### Issue: Low confidence in response
 
 **Possible causes:**
+
 - Question not in knowledge base
 - Ambiguous requirements
 - Missing context
 - Feature not yet released
 
 **Solutions:**
+
 1. Ask clarifying questions
 2. Check related documentation
 3. Suggest manual workaround
@@ -202,12 +208,14 @@ Documentation: /docs/features/cohort-retention.md
 ### Issue: Cannot find relevant docs
 
 **Possible causes:**
+
 - Outdated knowledge base
 - New feature not documented
 - Documentation in wrong location
 - Search index issues
 
 **Solutions:**
+
 1. Refresh knowledge base: `support-skill --refresh-kb`
 2. Search by keywords: `support-skill --search "topic"`
 3. Check playbook: `support-skill --check-playbook`
@@ -216,12 +224,14 @@ Documentation: /docs/features/cohort-retention.md
 ### Issue: Escalation criteria met
 
 **Possible causes:**
+
 - Complex technical issue
 - Security concern
 - Feature request
 - Service outage
 
 **Solutions:**
+
 1. Check severity level
 2. Verify SLA requirements
 3. Assign to appropriate team
@@ -232,13 +242,13 @@ Documentation: /docs/features/cohort-retention.md
 
 ### Support KPIs
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| First Response Time | < 5 min | TBD |
-| Resolution Time | < 4 hours | TBD |
-| First Contact Resolution | > 80% | TBD |
-| Customer Satisfaction | > 4.5/5 | TBD |
-| Escalation Rate | < 10% | TBD |
+| Metric                   | Target    | Current |
+| ------------------------ | --------- | ------- |
+| First Response Time      | < 5 min   | TBD     |
+| Resolution Time          | < 4 hours | TBD     |
+| First Contact Resolution | > 80%     | TBD     |
+| Customer Satisfaction    | > 4.5/5   | TBD     |
+| Escalation Rate          | < 10%     | TBD     |
 
 ### Quality Assurance
 
@@ -272,6 +282,5 @@ Documentation: /docs/features/cohort-retention.md
 
 ---
 
-**Skill Version:** 1.0.0
-**Last Updated:** 2026-02-16
-**Maintainer:** Duet Company AI Team
+**Skill Version:** 1.0.0 **Last Updated:** 2026-02-16 **Maintainer:** Duet
+Company AI Team

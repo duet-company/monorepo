@@ -4,7 +4,9 @@ Data engineering and pipeline management agent skill.
 
 ## 🎯 Purpose
 
-Manages data pipelines, ETL processes, data quality checks, and transformations for the Duet Company platform. Handles data ingestion, transformation, and storage operations.
+Manages data pipelines, ETL processes, data quality checks, and transformations
+for the Duet Company platform. Handles data ingestion, transformation, and
+storage operations.
 
 ## 🚀 Usage
 
@@ -75,36 +77,36 @@ data:
     home: ${AIRFLOW_HOME}
     db: ${AIRFLOW_DB}
     api_key: ${AIRFLOW_API_KEY}
-  
+
   storage:
     clickhouse:
       host: ${CLICKHOUSE_HOST}
       port: ${CLICKHOUSE_PORT}
       user: ${CLICKHOUSE_USER}
       password: ${CLICKHOUSE_PASSWORD}
-  
+
   streaming:
     kafka:
       bootstrap_servers: ${KAFKA_BOOTSTRAP_SERVERS}
       consumer_group: ${KAFKA_CONSUMER_GROUP}
-  
+
   etl:
     temp_dir: ${ETL_TEMP_DIR}
     log_dir: ${ETL_LOG_DIR}
     max_file_size: ${MAX_FILE_SIZE}
     batch_size: ${BATCH_SIZE}
-  
+
   quality:
     enabled: ${QUALITY_CHECK_ENABLED}
     threshold: ${QUALITY_THRESHOLD}
     null_check: ${NULL_CHECK_ENABLED}
     duplicate_check: ${DUPLICATE_CHECK_ENABLED}
-  
+
   llm:
     provider: ${LLM_PROVIDER}
     model: ${LLM_MODEL}
     api_key: ${LLM_API_KEY}
-  
+
   monitoring:
     enabled: ${METRICS_ENABLED}
     port: ${METRICS_PORT}
@@ -115,8 +117,7 @@ data:
 ### Clickstream Ingestion Pipeline
 
 ```markdown
-Requirement:
-"Ingest yesterday's clickstream data from Kafka into ClickHouse"
+Requirement: "Ingest yesterday's clickstream data from Kafka into ClickHouse"
 
 Generated Pipeline:
 
@@ -156,16 +157,15 @@ Generated Pipeline:
    - Latency monitoring
    - Data completeness checks
 
-Execution: Created DAG `clickstream_ingestion_v1`
-Schedule: Hourly (0 * * * *)
-Owner: data_engineering
+Execution: Created DAG `clickstream_ingestion_v1` Schedule: Hourly (0 \* \* \*
+\*) Owner: data_engineering
 ```
 
 ### Daily Sales Aggregation
 
-```markdown
-Requirement:
-"Create a daily sales aggregation pipeline with revenue by category"
+````markdown
+Requirement: "Create a daily sales aggregation pipeline with revenue by
+category"
 
 Generated Pipeline:
 
@@ -189,6 +189,7 @@ Generated Pipeline:
        AND order_date < today()
    GROUP BY date, category
    ```
+````
 
 3. Data Quality:
    - Null check: All required fields
@@ -211,10 +212,10 @@ Generated Pipeline:
    - Record count: ~1M rows
    - Optimization: Use materialized views
 
-Execution: Created DAG `daily_sales_aggregation_v1`
-Schedule: Daily (0 1 * * *)
-Owner: data_engineering
-```
+Execution: Created DAG `daily_sales_aggregation_v1` Schedule: Daily (0 1 \* \*
+\*) Owner: data_engineering
+
+````
 
 ### Data Quality Check Pipeline
 
@@ -228,40 +229,43 @@ Generated Pipeline:
 
    Null Check:
    ```sql
-   SELECT 
+   SELECT
        'email' AS field,
        COUNT(*) - COUNT(email) AS null_count,
        COUNT(*) AS total,
        ROUND((COUNT(*) - COUNT(email)) * 100.0 / COUNT(*), 2) AS null_percent
    FROM customers
-   ```
+````
 
-   Range Check:
-   ```sql
-   SELECT 
-       'order_date' AS field,
-       COUNT(*) - COUNT(order_date BETWEEN '2020-01-01' AND NOW()) AS invalid_range,
-       COUNT(*) AS total
-   FROM orders
-   ```
+Range Check:
 
-   Duplicate Check:
-   ```sql
-   SELECT 
-       'email' AS field,
-       COUNT(email) - COUNT(DISTINCT email) AS duplicates,
-       COUNT(DISTINCT email) AS unique
-   FROM customers
-   ```
+```sql
+SELECT
+    'order_date' AS field,
+    COUNT(*) - COUNT(order_date BETWEEN '2020-01-01' AND NOW()) AS invalid_range,
+    COUNT(*) AS total
+FROM orders
+```
 
-   Referential Check:
-   ```sql
-   SELECT 
-       COUNT(o.customer_id) - COUNT(DISTINCT c.customer_id) AS orphaned_orders
-   FROM orders o
-   LEFT JOIN customers c ON o.customer_id = c.customer_id
-   WHERE c.customer_id IS NULL
-   ```
+Duplicate Check:
+
+```sql
+SELECT
+    'email' AS field,
+    COUNT(email) - COUNT(DISTINCT email) AS duplicates,
+    COUNT(DISTINCT email) AS unique
+FROM customers
+```
+
+Referential Check:
+
+```sql
+SELECT
+    COUNT(o.customer_id) - COUNT(DISTINCT c.customer_id) AS orphaned_orders
+FROM orders o
+LEFT JOIN customers c ON o.customer_id = c.customer_id
+WHERE c.customer_id IS NULL
+```
 
 2. Thresholds:
    - Null threshold: < 1%
@@ -281,10 +285,10 @@ Generated Pipeline:
    - Issues found: 150K
    - Status: PASS
 
-Execution: Created DAG `data_quality_check_v1`
-Schedule: Hourly (0 * * * *)
+Execution: Created DAG `data_quality_check_v1` Schedule: Hourly (0 \* \* \* \*)
 Owner: data_engineering
-```
+
+````
 
 ## 🐛 Troubleshooting
 
@@ -361,7 +365,7 @@ clickstream_ingestion_v1:
   duration: 15 min 12s
   records_processed: 5,678,901
   lag: 30 min
-```
+````
 
 ## 🔗 Related Skills
 
@@ -378,6 +382,5 @@ clickstream_ingestion_v1:
 
 ---
 
-**Skill Version:** 1.0.0
-**Last Updated:** 2026-02-16
-**Maintainer:** Duet Company AI Team
+**Skill Version:** 1.0.0 **Last Updated:** 2026-02-16 **Maintainer:** Duet
+Company AI Team

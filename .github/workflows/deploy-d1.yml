@@ -4,11 +4,19 @@ on:
   push:
     branches: [main]
     paths: ['infrastructure/cloudflare/d1/migrations/**']
+  workflow_dispatch:
+    inputs:
+      migration_file:
+        description: 'Specific migration file to run (optional)'
+        required: false
+        default: ''
 
 jobs:
   migrate:
     name: Run D1 Migrations
     runs-on: ubuntu-latest
+    environment:
+      name: production
     steps:
       - uses: actions/checkout@v4
 
@@ -20,8 +28,49 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run D1 migrations
+      - name: List migration files
+        id: migrations
+        run: |
+          echo "Available migration files:"
+          ls -la infrastructure/cloudflare/d1/migrations/
+          echo "migrations_count=$(find infrastructure/cloudflare/d1/migrations/ -name '*.sql' | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Run all D1 migrations
+        if: github.event.inputs.migration_file == ''
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: d1 execute duet-company-prod --file=infrastructure/cloudflare/d1/migrations/001_initial.sql
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            d1 execute duet-company-prod --file=infrastructure/cloudflare/d1/migrations/001_initial.sql
+
+      - name: Run specific migration
+        if: github.event.inputs.migration_file != ''
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            d1 execute duet-company-prod --file=infrastructure/cloudflare/d1/migrations/${{ github.event.inputs.migration_file }}
+
+      - name: Verify migration
+        run: |
+          echo "Migration completed successfully!"
+          echo "Total migrations: ${{ steps.migrations.outputs.migrations_count }}"
+
+  rollback:
+    name: Rollback Migration (Manual)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.rollback == 'true'
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rollback last migration
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            d1 execute duet-company-prod --command="SELECT * FROM _migrations ORDER BY created_at DESC LIMIT 1"

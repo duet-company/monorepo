@@ -4,7 +4,8 @@ Natural language to SQL translation for Duet Company.
 
 ## 🎯 Purpose
 
-Transforms natural language queries into optimized SQL for ClickHouse and PostgreSQL.
+Transforms natural language queries into optimized SQL for ClickHouse and
+PostgreSQL.
 
 ## 🚀 Features
 
@@ -16,6 +17,7 @@ Transforms natural language queries into optimized SQL for ClickHouse and Postgr
 ## 🧠 Models
 
 Supports multiple LLM providers:
+
 - Claude (Anthropic)
 - GPT-4 (OpenAI)
 - GLM-5 (Z.AI)

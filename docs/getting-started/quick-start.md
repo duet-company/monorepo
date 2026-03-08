@@ -23,6 +23,7 @@ bun run dev
 ```
 
 This starts:
+
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8000
 - **API Docs**: http://localhost:8000/api/docs
@@ -92,14 +93,14 @@ bun run build
 
 ## Useful Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start all apps in development |
-| `bun run build` | Build all packages and apps |
-| `bun run test` | Run all tests |
-| `bun run lint` | Run linter |
-| `bun run typecheck` | Run TypeScript type check |
-| `bun run format` | Format code with Prettier |
+| Command             | Description                   |
+| ------------------- | ----------------------------- |
+| `bun run dev`       | Start all apps in development |
+| `bun run build`     | Build all packages and apps   |
+| `bun run test`      | Run all tests                 |
+| `bun run lint`      | Run linter                    |
+| `bun run typecheck` | Run TypeScript type check     |
+| `bun run format`    | Format code with Prettier     |
 
 ## Troubleshooting
 

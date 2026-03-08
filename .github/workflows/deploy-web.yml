@@ -2,6 +2,9 @@ name: Deploy Web
 
 on:
   push:
+    branches: [main, develop]
+    paths: ['apps/web/**', 'packages/**', '.github/workflows/deploy-web.yml']
+  pull_request:
     branches: [main]
     paths: ['apps/web/**', 'packages/**']
 
@@ -12,6 +15,9 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    environment:
+      name: ${{ github.ref_name == 'main' && 'production' || 'preview' }}
+      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -24,10 +30,38 @@ jobs:
         run: bun install
 
       - name: Build web app
-        run: bun run --filter './apps/web' build
+        env:
+          NEXT_PUBLIC_APP_URL: ${{ github.ref_name == 'main' && 'https://duet.company' || 'https://preview.duet.company' }}
+          NEXT_PUBLIC_API_URL: ${{ github.ref_name == 'main' && 'https://api.duet.company' || 'https://api-preview.duet.company' }}
+        run: |
+          echo "Building for ${{ github.ref_name }} branch"
+          echo "NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL"
+          echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL"
+          bun run --filter './apps/web' build
 
       - name: Deploy to Cloudflare Pages
+        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy apps/web/.next --project-name=duet-company-web
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            pages deploy apps/web/.next \
+              --project-name=duet-company-web \
+              --branch=${{ github.ref_name }} \
+              ${{ github.ref_name != 'main' && '--preview' || '' }}
+
+      - name: Output deployment URL
+        run: |
+          echo "Deployment URL: ${{ steps.deploy.outputs.url }}"
+
+  notify:
+    name: Notify Deployment
+    runs-on: ubuntu-latest
+    needs: deploy
+    if: github.ref_name == 'main'
+    steps:
+      - name: Deployment summary
+        run: |
+          echo "🚀 Production deployment successful!"
+          echo "URL: https://duet.company"

@@ -3,17 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "description": "Duet Company - AI-first data infrastructure platform",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "bun run --filter './apps/*' dev",
     "build": "bun run build:packages && bun run build:apps",
     "build:packages": "bun run --filter './packages/*' build",
     "build:apps": "bun run --filter './apps/*' build",
     "test": "bun run --filter './**/*' test",
+    "test:coverage": "bun run --filter './**/*' test:coverage",
     "lint": "bun run --filter './**/*' lint",
+    "lint:fix": "bun run --filter './**/*' lint:fix",
     "typecheck": "bun run --filter './**/*' typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,css,yml,yaml}\"",
+    "clean": "rm -rf node_modules */node_modules .turbo */.next */dist",
     "deploy": "bun run scripts/deploy.sh",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+    "ci": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run build"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

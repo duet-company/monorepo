@@ -2,9 +2,12 @@
 
 ## 🚀 Company Overview
 
-**Duet Company** is an AI-first data infrastructure company founded in 2025. We build autonomous systems where AI agents design, deploy, and manage scalable data platforms with minimal human oversight.
+**Duet Company** is an AI-first data infrastructure company founded in 2025. We
+build autonomous systems where AI agents design, deploy, and manage scalable
+data platforms with minimal human oversight.
 
 ### Key Stats
+
 - **Founded:** January 2025
 - **Team:** 1 human (Duyet Le) + AI agents
 - **Location:** Vietnam (remote)
@@ -16,6 +19,7 @@
 ## 📊 Business Model
 
 ### Revenue Streams
+
 1. **SaaS Subscriptions** (Primary)
    - Starter: $999/month
    - Growth: $2,999/month
@@ -32,17 +36,19 @@
    - Dashboards
 
 ### Financial Projections
-| Year | Revenue | ARR | Customers |
-|------|---------|-----|-----------|
-| Year 1 | $1M | $1M | 50+ |
-| Year 2 | $5M | $5M | 100+ |
-| Year 3 | $20M | $20M | 500+ |
+
+| Year   | Revenue | ARR  | Customers |
+| ------ | ------- | ---- | --------- |
+| Year 1 | $1M     | $1M  | 50+       |
+| Year 2 | $5M     | $5M  | 100+      |
+| Year 3 | $20M    | $20M | 500+      |
 
 ---
 
 ## 🏗️ Technical Architecture
 
 ### Core Technologies
+
 - **Database:** ClickHouse (analytics), PostgreSQL (metadata)
 - **Orchestration:** Cloudflare Workers & Pages
 - **API:** FastAPI (Python)
@@ -51,6 +57,7 @@
 - **Monitoring:** Prometheus + Grafana
 
 ### System Components
+
 1. **Natural Language Interface**
    - Text-to-SQL query conversion
    - Natural language platform design
@@ -73,7 +80,9 @@
 ## 🗺️ Roadmap Status
 
 ### ✅ Phase 1: Foundation (Weeks 1-4) - IN PROGRESS
+
 **Completed:**
+
 - [x] Company strategy and vision document
 - [x] Technical architecture design
 - [x] Execution roadmap (16-week plan)
@@ -83,6 +92,7 @@
 - [x] Monorepo setup with Bun workspaces
 
 **In Progress:**
+
 - [ ] Company registration (Singapore C-Corp)
 - [ ] Domain acquisition
 - [ ] Brand identity (logo, colors)
@@ -91,24 +101,28 @@
 - [ ] AI agent framework implementation
 
 **Upcoming (Weeks 2-4):**
+
 - Platform Designer Agent
 - Query Agent implementation
 - Authentication system
 - Monitoring setup
 
 ### 🚧 Phase 2: MVP Development (Weeks 5-8)
+
 - [ ] Platform Designer Agent
 - [ ] Query Agent enhancements
 - [ ] Monitoring & observability
 - [ ] User experience (web dashboard)
 
 ### 🎯 Phase 3: Beta Testing (Weeks 9-12)
+
 - [ ] First design partner
 - [ ] Feedback and iteration
 - [ ] Additional beta users (5 total)
 - [ ] Security audit
 
 ### 🚀 Phase 4: Launch (Weeks 13-16)
+
 - [ ] Production hardening
 - [ ] Billing and subscriptions
 - [ ] Marketing and launch
@@ -119,11 +133,13 @@
 ## 🤖 AI Agents
 
 ### Current Status
+
 - **Framework:** Design complete
 - **Implementation:** Pending
 - **Models:** Planned (Claude, GPT-4, GLM-5, Gemini)
 
 ### Agent Capabilities
+
 1. **Query Agent**
    - Natural language to SQL translation
    - Query optimization
@@ -182,6 +198,7 @@ duet-company/
 ## 🔧 Development Status
 
 ### Backend
+
 - **Framework:** FastAPI ✅
 - **API Endpoints:** Stubbed ✅
 - **Database:** Not yet connected ⏳
@@ -189,10 +206,12 @@ duet-company/
 - **AI Integration:** Pending ⏳
 
 ### Frontend
+
 - **Framework:** Next.js 14 + TypeScript
 - **Status:** Basic structure ⏳
 
 ### Infrastructure
+
 - **Cloudflare:** Configured ✅
 - **Docker:** Not built ⏳
 - **CI/CD:** GitHub Actions configured ✅
@@ -225,18 +244,21 @@ duet-company/
 ## 🎯 Success Metrics
 
 ### Technical KPIs
+
 - Platform uptime: 99.9%
 - Query performance: <1s for 95% of queries
 - Time to deployment: <4 hours
 - Cost efficiency: <$100/TB/month
 
 ### Business KPIs
+
 - MRR growth: 20% MoM
 - Customer NPS: >50
 - Churn rate: <5%
 - LTV:CAC ratio: >3:1
 
 ### AI Agent KPIs
+
 - Autonomous resolution rate: >80%
 - Customer satisfaction: >4.5/5
 - Agent uptime: 99.9%
@@ -246,11 +268,13 @@ duet-company/
 ## 📞 Contact & Resources
 
 ### Team
+
 - **Founder:** Duyet Le (@duyet)
 - **Email:** me@duyet.net
 - **GitHub:** github.com/duyet
 
 ### Resources
+
 - **Website:** https://duet.company
 - **Documentation:** /docs
 - **API Docs:** /api/docs (when running)
@@ -283,9 +307,8 @@ duet-company/
 
 ---
 
-**Status:** 🚧 Building autonomously
-**Confidence:** High - Clear roadmap, proven technologies
-**Timeline:** 16 weeks to launch
-**Version:** 0.1.0 (Foundation)
+**Status:** 🚧 Building autonomously **Confidence:** High - Clear roadmap,
+proven technologies **Timeline:** 16 weeks to launch **Version:** 0.1.0
+(Foundation)
 
-*Last Updated: 2025-03-08*
+_Last Updated: 2025-03-08_

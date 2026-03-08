@@ -1,10 +1,13 @@
 # Project Management Skill
 
-Detailed project tracking, sprint management, and task coordination for Duet Company.
+Detailed project tracking, sprint management, and task coordination for Duet
+Company.
 
 ## 🎯 Purpose
 
-Provides comprehensive project management including sprint planning, task breakdown, time tracking, dependency management, and milestone coordination for Duet Company development.
+Provides comprehensive project management including sprint planning, task
+breakdown, time tracking, dependency management, and milestone coordination for
+Duet Company development.
 
 ## 🚀 Usage
 
@@ -59,17 +62,17 @@ project:
   kanboard:
     url: ${KANBOARD}
     repo: ${KANBOARD_REPO}
-  
+
   sprint:
     duration_weeks: ${SPRINT_DURATION_WEEKS}
     start_day: ${SPRINT_START_DAY}
     velocity_target: ${SPRINT_VELOCITY_TARGET}
-  
+
   estimation:
     story_point_day: ${STORY_POINT_DAY}
     task_min_days: ${TASK_MIN_DAYS}
     task_max_days: ${TASK_MAX_DAYS}
-  
+
   labels:
     priority: ${PRIORITY_LABELS}
     type: ${TYPE_LABELS}
@@ -81,47 +84,44 @@ project:
 ### Feature Breakdown
 
 ```markdown
-User Request:
-"Break down the authentication system feature into tasks"
+User Request: "Break down the authentication system feature into tasks"
 
 Response:
 
-**Feature:** Authentication System for Duet Company Platform
-**Estimated Story Points:** 21
-**Target Sprint:** Sprint 2 (Weeks 3-4)
+**Feature:** Authentication System for Duet Company Platform **Estimated Story
+Points:** 21 **Target Sprint:** Sprint 2 (Weeks 3-4)
 
 **Task Breakdown:**
 
 #### 1. User Registration (5 points)
-**Description:** Implement user sign-up and login functionality
-**Tasks:**
+
+**Description:** Implement user sign-up and login functionality **Tasks:**
+
 - [ ] Design database schema for users table
 - [ ] Implement password hashing (bcrypt)
 - [ ] Create user registration API endpoint
 - [ ] Create login API endpoint
 - [ ] Add email verification
 - [ ] Write unit tests
-- [ ] Add API documentation
-**Estimated Days:** 5
-**Dependencies:** None
-**Assignee:** @backend-team
+- [ ] Add API documentation **Estimated Days:** 5 **Dependencies:** None
+      **Assignee:** @backend-team
 
 #### 2. Session Management (3 points)
-**Description:** Handle user sessions and tokens
-**Tasks:**
+
+**Description:** Handle user sessions and tokens **Tasks:**
+
 - [ ] Design session storage (Redis)
 - [ ] Implement token generation
 - [ ] Create session validation middleware
 - [ ] Implement token refresh logic
 - [ ] Add session expiration
-- [ ] Write unit tests
-**Estimated Days:** 3
-**Dependencies:** User registration complete
-**Assignee:** @backend-team
+- [ ] Write unit tests **Estimated Days:** 3 **Dependencies:** User registration
+      complete **Assignee:** @backend-team
 
 #### 3. OAuth Integration (8 points)
-**Description:** Add OAuth2 support for Google and GitHub
-**Tasks:**
+
+**Description:** Add OAuth2 support for Google and GitHub **Tasks:**
+
 - [ ] Research OAuth2 flow
 - [ ] Configure provider credentials
 - [ ] Implement authorization code flow
@@ -129,60 +129,57 @@ Response:
 - [ ] Add token exchange logic
 - [ ] User profile synchronization
 - [ ] Add revocation endpoint
-- [ ] Write integration tests
-**Estimated Days:** 8
-**Dependencies:** Session management complete
-**Assignee:** @backend-team
+- [ ] Write integration tests **Estimated Days:** 8 **Dependencies:** Session
+      management complete **Assignee:** @backend-team
 
 #### 4. Permission System (5 points)
-**Description:** Implement role-based access control
-**Tasks:**
+
+**Description:** Implement role-based access control **Tasks:**
+
 - [ ] Define permission schema (admin, user, viewer)
 - [ ] Create permissions database table
 - [ ] Implement permission checking middleware
 - [ ] Add permission assignment API
 - [ ] Create permission management UI
 - [ ] Write permission tests
-- [ ] Document permission system
-**Estimated Days:** 5
-**Dependencies:** OAuth integration complete
-**Assignee:** @backend-team
+- [ ] Document permission system **Estimated Days:** 5 **Dependencies:** OAuth
+      integration complete **Assignee:** @backend-team
 
-**Total Story Points:** 21
-**Total Estimated Days:** 21 (3.5 weeks)
-**Sprint Capacity:** 20 points (2.5 weeks)
+**Total Story Points:** 21 **Total Estimated Days:** 21 (3.5 weeks) **Sprint
+Capacity:** 20 points (2.5 weeks)
 
 **Risk:** Feature may need to be split across 2 sprints
 
 **Next Actions:**
+
 1. Create GitHub issues for each task
 2. Add to kanboard Sprint 2
 3. Assign to backend team
 4. Monitor dependencies and adjust timeline
 
 Documentation:
+
 - Kanboard: https://github.com/duet-company/kanboard
-- Feature Spec: https://github.com/duet-company/docs/blob/main/features/authentication.md
+- Feature Spec:
+  https://github.com/duet-company/docs/blob/main/features/authentication.md
 ```
 
 ### Sprint Planning
 
 ```markdown
-User Request:
-"Create sprint plan for Week 3 (MVP Development)"
+User Request: "Create sprint plan for Week 3 (MVP Development)"
 
 Response:
 
-**Sprint 2: MVP Development (Weeks 3-4)**
-**Sprint Goal:** Complete all core AI agents and basic platform infrastructure
-**Sprint Duration:** 2 weeks
-**Capacity:** 20 story points
-**Start Date:** March 9, 2026 (Monday)
-**End Date:** March 23, 2026 (Sunday)
+**Sprint 2: MVP Development (Weeks 3-4)** **Sprint Goal:** Complete all core AI
+agents and basic platform infrastructure **Sprint Duration:** 2 weeks
+**Capacity:** 20 story points **Start Date:** March 9, 2026 (Monday) **End
+Date:** March 23, 2026 (Sunday)
 
 **Backlog Items Selected (20 points):**
 
 #### High Priority (12 points):
+
 1. **Query Agent Implementation** (5 points)
    - NL to SQL translation engine
    - Query optimization and caching
@@ -205,6 +202,7 @@ Response:
    - Dependencies: Infrastructure
 
 #### Medium Priority (8 points):
+
 4. **Frontend Skeleton** (4 points)
    - React + TypeScript setup
    - Basic routing and layout
@@ -220,16 +218,19 @@ Response:
    - Dependencies: Infrastructure
 
 **Dependencies:**
+
 - Infrastructure must be complete before Authentication, Monitoring
 - Backend API needed for Frontend
 - All agents must work before end of sprint
 
 **Sprint Risks:**
+
 - High: Infrastructure not ready by Week 3 start
 - Medium: Team capacity limited
 - Low: Unknown complexity in agent implementations
 
 **Sprint Goals:**
+
 - [ ] Complete Query Agent with caching
 - [ ] Complete Platform Designer Agent
 - [ ] Ship authentication system
@@ -238,41 +239,43 @@ Response:
 - [ ] Maintain 0 blocked items
 - [ ] Achieve sprint velocity of 20 points
 
-**Review Date:** March 23, 2026
-**Retro Date:** March 24, 2026
+**Review Date:** March 23, 2026 **Retro Date:** March 24, 2026
 
 **Links:**
+
 - Kanboard: https://github.com/duet-company/kanboard/issues
-- Roadmap: https://github.com/duet-company/vision/blob/main/ROADMAP.md#phase-2-mvp-development-weeks-5-8
+- Roadmap:
+  https://github.com/duet-company/vision/blob/main/ROADMAP.md#phase-2-mvp-development-weeks-5-8
 ```
 
 ### Task Status Update
 
 ```markdown
-User Request:
-"Update task #45 status to in-progress"
+User Request: "Update task #45 status to in-progress"
 
 Response:
 
 **Task #45 Updated:**
 
-**Title:** Implement user registration API endpoint
-**Repository:** duet-company/backend
-**Issue:** https://github.com/duet-company/backend/issues/45
+**Title:** Implement user registration API endpoint **Repository:**
+duet-company/backend **Issue:**
+https://github.com/duet-company/backend/issues/45
 
 **Status Change:** ready → in-progress
 
 **Updated Details:**
+
 - **Status:** 🔄 In Progress
 - **Assignee:** @duyet
 - **Started:** February 16, 2026, 2:07 PM UTC
 - **Labels:** feature, backend, authentication, in-progress
 - **Estimated Completion:** February 18, 2026
 
-**Progress Update Added:**
-"Started implementing user registration endpoint. Will include email verification and password hashing. ETA: 2 days."
+**Progress Update Added:** "Started implementing user registration endpoint.
+Will include email verification and password hashing. ETA: 2 days."
 
 **Next Actions:**
+
 1. Clone backend repository
 2. Create feature branch from main
 3. Implement user registration endpoint
@@ -283,10 +286,12 @@ Response:
 8. Update task to review status
 
 **Related Issues:**
+
 - #44 - User login endpoint (blocked by #45)
 - #46 - Password hashing library (depends on #45)
 
 **Sprint Impact:**
+
 - Sprint 1: Now 3/8 tasks in progress
 - Velocity: 3 story points completed this week
 - Remaining capacity: 17 story points
@@ -295,36 +300,26 @@ Response:
 ### Dependency Management
 
 ```markdown
-User Request:
-"Show me the dependency graph for authentication feature"
+User Request: "Show me the dependency graph for authentication feature"
 
 Response:
 
 **Authentication Feature Dependency Graph:**
-
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ Authentication Feature (21 story points)          │
-│ ┌─────────────┬─────────────┬─────────────┐│
-│ │User Reg    │Session Mgmt  │OAuth2       ││
-│ │(5 pts)     │(3 pts)     │(8 pts)     ││
-│ └─────┬───────┴───────┬───────┘│
-│       │               │       │     ││
-│ ▼               │       ▼       ▼     ││
-│ Perm System │Token Gen │Provider  │   │
-│ │(5 pts)    │(1 pt)  │Config  │   │
-│ └─────────────┴──────────────┘     │
-│                                     │
-│                                 ▼
-│                            Infrastructure (4 pts)
-│
+
+┌─────────────────────────────────────────────────────────────┐ │ Authentication
+Feature (21 story points) │ │ ┌─────────────┬─────────────┬─────────────┐│ │
+│User Reg │Session Mgmt │OAuth2 ││ │ │(5 pts) │(3 pts) │(8 pts) ││ │
+└─────┬───────┴───────┬───────┘│ │ │ │ │ ││ │ ▼ │ ▼ ▼ ││ │ Perm System │Token
+Gen │Provider │ │ │ │(5 pts) │(1 pt) │Config │ │ │
+└─────────────┴──────────────┘ │ │ │ │ ▼ │ Infrastructure (4 pts) │
 └──────────────────────────────────────────────────────┘
 
-Critical Path: User Reg → Session Mgmt → OAuth2 → Perm System (15 days)
-                    │
-                    └──→ Auth Complete (20 days)
+Critical Path: User Reg → Session Mgmt → OAuth2 → Perm System (15 days) │ └──→
+Auth Complete (20 days)
 
 Parallel Tasks:
+
 - Query Agent (can start now)
 - Platform Designer (can start now)
 - Frontend Skeleton (can start now)
@@ -333,11 +328,13 @@ Parallel Tasks:
 Total Timeline: 20-25 days for authentication complete
 
 Blockers:
+
 - ⚠️ Infrastructure must be ready before Auth can deploy to staging
 - ⚠️ OAuth2 credentials must be configured before integration testing
 
-Recommendation:
-Prioritize infrastructure setup (4 days) to unblock authentication development
+Recommendation: Prioritize infrastructure setup (4 days) to unblock
+authentication development
+
 ```
 
 ## 🐛 Troubleshooting
@@ -432,3 +429,4 @@ Prioritize infrastructure setup (4 days) to unblock authentication development
 **Skill Version:** 1.0.0
 **Last Updated:** 2026-02-16
 **Maintainer:** Duet Company Project Management
+```

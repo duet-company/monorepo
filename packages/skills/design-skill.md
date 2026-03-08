@@ -4,7 +4,9 @@ Platform design and infrastructure automation agent skill.
 
 ## 🎯 Purpose
 
-Automates data platform design from natural language requirements. Includes schema design, infrastructure provisioning, dashboard creation, and configuration management.
+Automates data platform design from natural language requirements. Includes
+schema design, infrastructure provisioning, dashboard creation, and
+configuration management.
 
 ## 🚀 Usage
 
@@ -70,17 +72,17 @@ design:
     kubernetes:
       enabled: true
       replicas: 3
-  
+
   database:
     type: clickhouse
     host: ${CLICKHOUSE_HOST}
     port: ${CLICKHOUSE_PORT}
-  
+
   llm:
     provider: ${LLM_PROVIDER}
     model: ${LLM_MODEL}
     api_key: ${LLM_API_KEY}
-  
+
   automation:
     auto_apply: ${AUTO_APPLY}
     dry_run: ${DRY_RUN}
@@ -92,8 +94,7 @@ design:
 ### E-commerce Platform Design
 
 ```markdown
-Requirement:
-"I need an e-commerce analytics platform with real-time dashboards"
+Requirement: "I need an e-commerce analytics platform with real-time dashboards"
 
 Generated Design:
 
@@ -124,8 +125,7 @@ Generated Design:
 ### Customer Analytics Platform
 
 ```markdown
-Requirement:
-"Build a customer behavior analytics platform with cohort analysis"
+Requirement: "Build a customer behavior analytics platform with cohort analysis"
 
 Generated Design:
 
@@ -153,12 +153,14 @@ Generated Design:
 ### Issue: Infrastructure provisioning fails
 
 **Possible causes:**
+
 - Insufficient cloud resources
 - Invalid Terraform state
 - Network connectivity issues
 - Missing credentials
 
 **Solutions:**
+
 1. Check cloud quota: `digitaloceanctl account show`
 2. Validate Terraform: `terraform validate`
 3. Check credentials: `terraform login`
@@ -167,12 +169,14 @@ Generated Design:
 ### Issue: Schema design conflicts
 
 **Possible causes:**
+
 - Existing tables with same name
 - Data type mismatches
 - Constraint violations
 - Partitioning conflicts
 
 **Solutions:**
+
 1. Check existing schema: `design-skill --show-schema`
 2. Use table prefixes for different domains
 3. Validate with dry run: `design-skill --dry-run`
@@ -181,12 +185,14 @@ Generated Design:
 ### Issue: Dashboard not rendering
 
 **Possible causes:**
+
 - Data not available
 - Query too slow
 - Incorrect query syntax
 - Missing fields
 
 **Solutions:**
+
 1. Check data ingestion: `design-skill --check-data`
 2. Optimize query: `design-skill --optimize`
 3. Validate SQL: `design-skill --validate-sql`
@@ -235,6 +241,5 @@ Generated Design:
 
 ---
 
-**Skill Version:** 1.0.0
-**Last Updated:** 2026-02-16
-**Maintainer:** Duet Company AI Team
+**Skill Version:** 1.0.0 **Last Updated:** 2026-02-16 **Maintainer:** Duet
+Company AI Team

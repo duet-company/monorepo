@@ -4,7 +4,9 @@ Natural language to SQL translation agent skill.
 
 ## 🎯 Purpose
 
-Transforms natural language queries into optimized SQL for ClickHouse and PostgreSQL databases. Enables users to ask questions in plain English and get accurate, optimized SQL queries.
+Transforms natural language queries into optimized SQL for ClickHouse and
+PostgreSQL databases. Enables users to ask questions in plain English and get
+accurate, optimized SQL queries.
 
 ## 🚀 Usage
 
@@ -56,12 +58,12 @@ query:
     host: ${DB_HOST}
     port: ${DB_PORT}
     name: ${DB_NAME}
-  
+
   llm:
     provider: ${LLM_PROVIDER}
     model: ${LLM_MODEL}
     api_key: ${LLM_API_KEY}
-  
+
   optimization:
     enabled: ${ENABLE_OPTIMIZATION}
     max_rows: ${MAX_ROWS}
@@ -77,7 +79,7 @@ query:
 "Show me revenue trends for last 6 months"
 
 -- Generated SQL
-SELECT 
+SELECT
     toStartOfMonth(created_at) AS month,
     SUM(revenue) AS total_revenue,
     COUNT(*) AS order_count
@@ -92,7 +94,7 @@ ORDER BY month
 "What are our top 10 products by sales?"
 
 -- Generated SQL
-SELECT 
+SELECT
     product_name,
     SUM(quantity) AS total_sold,
     SUM(price * quantity) AS total_revenue
@@ -144,11 +146,13 @@ ORDER BY cohort_month, activity_month
 ### Issue: SQL returns empty results
 
 **Possible causes:**
+
 - Table names incorrect
 - Column names don't match schema
 - Date range too restrictive
 
 **Solutions:**
+
 1. Check schema metadata: `query-skill --schema`
 2. Validate table names in generated SQL
 3. Expand date range in query
@@ -157,11 +161,13 @@ ORDER BY cohort_month, activity_month
 ### Issue: Query too slow
 
 **Possible causes:**
+
 - Missing indexes
 - Suboptimal JOIN order
 - No partition pruning
 
 **Solutions:**
+
 1. Enable automatic optimization: `ENABLE_OPTIMIZATION=true`
 2. Check query plan: `EXPLAIN <query>`
 3. Add indexes to frequently queried columns
@@ -170,11 +176,13 @@ ORDER BY cohort_month, activity_month
 ### Issue: LLM generates invalid SQL
 
 **Possible causes:**
+
 - Schema not loaded
 - Ambiguous column names
 - Complex requirements
 
 **Solutions:**
+
 1. Refresh schema: `query-skill --refresh-schema`
 2. Provide more context in query
 3. Break complex query into multiple steps
@@ -184,12 +192,12 @@ ORDER BY cohort_month, activity_month
 
 ### Benchmarks
 
-| Query Type | Avg Time | Success Rate |
-|------------|-----------|--------------|
-| Simple SELECT | 50ms | 98% |
-| JOIN queries | 200ms | 95% |
-| Aggregations | 300ms | 92% |
-| Complex | 800ms | 85% |
+| Query Type    | Avg Time | Success Rate |
+| ------------- | -------- | ------------ |
+| Simple SELECT | 50ms     | 98%          |
+| JOIN queries  | 200ms    | 95%          |
+| Aggregations  | 300ms    | 92%          |
+| Complex       | 800ms    | 85%          |
 
 ### Optimization Tips
 
@@ -213,6 +221,5 @@ ORDER BY cohort_month, activity_month
 
 ---
 
-**Skill Version:** 1.0.0
-**Last Updated:** 2026-02-16
-**Maintainer:** Duet Company AI Team
+**Skill Version:** 1.0.0 **Last Updated:** 2026-02-16 **Maintainer:** Duet
+Company AI Team

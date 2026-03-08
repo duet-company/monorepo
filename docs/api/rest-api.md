@@ -40,6 +40,7 @@ curl https://api.duet.company/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -61,6 +62,7 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
 ```
 
 **Response:**
+
 ```json
 {
   "platforms": [
@@ -90,6 +92,7 @@ curl -X POST https://api.duet.company/api/v1/platforms \
 ```
 
 **Response:**
+
 ```json
 {
   "id": "platform_456",
@@ -127,6 +130,7 @@ curl https://api.duet.company/api/v1/agents
 ```
 
 **Response:**
+
 ```json
 {
   "agents": [
@@ -161,12 +165,13 @@ curl -X POST https://api.duet.company/api/v1/agents/query \
 ```
 
 **Response:**
+
 ```json
 {
   "sql": "SELECT date, sum(revenue) as daily_revenue FROM orders WHERE date >= now() - INTERVAL 6 MONTH GROUP BY date ORDER BY date",
   "result": [
-    {"date": "2025-01-01", "daily_revenue": 1234.56},
-    {"date": "2025-01-02", "daily_revenue": 2345.67}
+    { "date": "2025-01-01", "daily_revenue": 1234.56 },
+    { "date": "2025-01-02", "daily_revenue": 2345.67 }
   ],
   "execution_time_ms": 123
 }
@@ -186,6 +191,7 @@ curl -X POST https://api.duet.company/api/v1/agents/design \
 ```
 
 **Response:**
+
 ```json
 {
   "schema": {
@@ -193,9 +199,9 @@ curl -X POST https://api.duet.company/api/v1/agents/design \
       {
         "name": "orders",
         "columns": [
-          {"name": "id", "type": "UUID"},
-          {"name": "customer_id", "type": "UUID"},
-          {"name": "amount", "type": "Decimal(10,2)"}
+          { "name": "id", "type": "UUID" },
+          { "name": "customer_id", "type": "UUID" },
+          { "name": "amount", "type": "Decimal(10,2)" }
         ]
       }
     ]
@@ -241,6 +247,7 @@ curl -H "Authorization: Bearer YOUR_TOKEN" \
 ```
 
 **Response:**
+
 ```json
 {
   "cpu_usage_percent": 45.2,
@@ -273,22 +280,22 @@ All endpoints may return error responses:
 
 ### Common Error Codes
 
-| Code | Description |
-|------|-------------|
-| UNAUTHORIZED | Invalid or missing authentication |
-| FORBIDDEN | Insufficient permissions |
-| NOT_FOUND | Resource not found |
-| VALIDATION_ERROR | Invalid request data |
-| RATE_LIMIT_EXCEEDED | Too many requests |
-| INTERNAL_ERROR | Server error |
+| Code                | Description                       |
+| ------------------- | --------------------------------- |
+| UNAUTHORIZED        | Invalid or missing authentication |
+| FORBIDDEN           | Insufficient permissions          |
+| NOT_FOUND           | Resource not found                |
+| VALIDATION_ERROR    | Invalid request data              |
+| RATE_LIMIT_EXCEEDED | Too many requests                 |
+| INTERNAL_ERROR      | Server error                      |
 
 ## Rate Limits
 
-| Plan | Requests per minute | Requests per day |
-|------|---------------------|------------------|
-| Starter | 60 | 10,000 |
-| Growth | 200 | 50,000 |
-| Enterprise | Unlimited | Unlimited |
+| Plan       | Requests per minute | Requests per day |
+| ---------- | ------------------- | ---------------- |
+| Starter    | 60                  | 10,000           |
+| Growth     | 200                 | 50,000           |
+| Enterprise | Unlimited           | Unlimited        |
 
 ## SDKs
 

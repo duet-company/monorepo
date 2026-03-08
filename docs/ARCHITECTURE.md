@@ -57,6 +57,7 @@
 ### 1. API Gateway & Authentication
 
 **Technology:**
+
 - Kong or Envoy (API gateway)
 - OAuth 2.0 / OpenID Connect
 - JWT tokens
@@ -64,6 +65,7 @@
 - Request logging
 
 **Endpoints:**
+
 ```bash
 # Platform management
 POST   /api/v1/platforms              # Create platform
@@ -94,6 +96,7 @@ GET    /api/v1/monitoring/logs        # System logs
 **Core Components:**
 
 #### Agent Orchestrator
+
 ```typescript
 interface Agent {
   id: string;
@@ -122,52 +125,64 @@ class AgentOrchestrator {
 ```
 
 #### Query Agent
+
 **Capabilities:**
+
 - Natural language to SQL translation
 - Query optimization
 - Result visualization
 - Explainable AI (showing generated SQL)
 
 **Tools:**
+
 - SQL generation (ClickHouse SQL)
 - Query execution
 - Result formatting
 - Visualization generation
 
 #### Platform Designer Agent
+
 **Capabilities:**
+
 - Schema design from requirements
 - Infrastructure provisioning
 - Dashboard creation
 - Data connector setup
 
 **Tools:**
+
 - ClickHouse schema generation
 - Kubernetes deployment
 - Grafana dashboard templates
 - Data connector SDK
 
 #### Support Agent
+
 **Capabilities:**
+
 - 24/7 customer support
 - Issue diagnosis and resolution
 - Knowledge base access
 - Ticket management
 
 **Tools:**
+
 - Documentation search (RAG)
 - Log analysis
 - System health checks
 - Ticket creation
 
 #### Ops Agent
+
 **Capabilities:**
+
 - Infrastructure monitoring
 - Auto-scaling
 - Self-healing
 - Cost optimization
 
 **Tools:**
+
 - Prometheus metrics
 - Kubernetes API
 - Alert management
@@ -176,6 +191,7 @@ class AgentOrchestrator {
 ### 3. Data Orchestration Layer
 
 #### Stream Ingestion
+
 ```yaml
 # Apache Kafka + ClickHouse Kafka Engine
 topics:
@@ -192,6 +208,7 @@ clickhouse_tables:
 ```
 
 #### Batch Processing
+
 ```python
 # Airflow DAGs for batch jobs
 from airflow import DAG
@@ -221,6 +238,7 @@ aggregate_task = ClickHouseOperator(
 ```
 
 #### ML Models
+
 ```python
 # Anomaly detection using Isolation Forest
 from sklearn.ensemble import IsolationForest
@@ -242,6 +260,7 @@ class AnomalyDetector:
 ```
 
 #### RAG System
+
 ```python
 # LlamaIndex + Qdrant
 from llama_index.core import VectorStoreIndex, Document
@@ -268,6 +287,7 @@ class KnowledgeBase:
 ### 4. Data Storage Layer
 
 #### ClickHouse Configuration
+
 ```sql
 -- ClickHouse configuration for analytics
 CREATE DATABASE IF NOT EXISTS analytics;
@@ -309,6 +329,7 @@ ORDER BY (hour, event_type);
 ```
 
 #### PostgreSQL (Metadata)
+
 ```sql
 -- User management
 CREATE TABLE users (
@@ -339,6 +360,7 @@ CREATE TABLE audit_logs (
 ```
 
 #### Qdrant (Vectors)
+
 ```python
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams
@@ -354,6 +376,7 @@ client.create_collection(
 ### 5. Infrastructure Layer
 
 #### Kubernetes Deployment
+
 ```yaml
 # ClickHouse deployment
 apiVersion: apps/v1
@@ -372,25 +395,26 @@ spec:
         app: clickhouse
     spec:
       containers:
-      - name: clickhouse
-        image: clickhouse/clickhouse-server:latest
-        ports:
-        - containerPort: 8123
-        - containerPort: 9000
-        volumeMounts:
-        - name: data
-          mountPath: /var/lib/clickhouse
+        - name: clickhouse
+          image: clickhouse/clickhouse-server:latest
+          ports:
+            - containerPort: 8123
+            - containerPort: 9000
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/clickhouse
   volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 100Gi
+    - metadata:
+        name: data
+      spec:
+        accessModes: ['ReadWriteOnce']
+        resources:
+          requests:
+            storage: 100Gi
 ```
 
 #### CI/CD Pipeline
+
 ```yaml
 # .github/workflows/deploy.yml
 name: Deploy
@@ -402,16 +426,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl apply -f k8s/
-        kubectl rollout restart deployment/api-gateway
+      - uses: actions/checkout@v3
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/
+          kubectl rollout restart deployment/api-gateway
 ```
 
 ## Security Architecture
 
 ### Authentication Flow
+
 ```
 1. User logs in via OAuth (Google/GitHub)
 2. JWT token issued with user claims
@@ -421,11 +446,13 @@ jobs:
 ```
 
 ### Data Encryption
+
 - **At rest:** AES-256 encryption (database + volumes)
 - **In transit:** TLS 1.3
 - **Keys:** Managed via HashiCorp Vault
 
 ### Zero-Trust Architecture
+
 - Network segmentation (micro-segments)
 - Service mesh (Istio) for mTLS
 - Secrets management via Vault
@@ -434,6 +461,7 @@ jobs:
 ## Monitoring & Observability
 
 ### Metrics (Prometheus)
+
 ```yaml
 # ClickHouse metrics
 - clickhouse_query_duration_seconds
@@ -453,12 +481,14 @@ jobs:
 ```
 
 ### Logging
+
 - Structured JSON logs
 - Centralized in Loki
 - Log retention: 30 days
 - Sensitive data redaction
 
 ### Tracing (Jaeger)
+
 - Distributed tracing across microservices
 - Performance bottleneck identification
 - End-to-end request flow visualization
@@ -466,15 +496,18 @@ jobs:
 ## Scaling Strategy
 
 ### Horizontal Scaling
+
 - Stateless API services: Auto-scale based on CPU/memory
 - ClickHouse: Add shards for read/write scaling
 - Kafka: Add partitions for throughput
 
 ### Vertical Scaling
+
 - ClickHouse nodes: Scale up memory for large queries
 - Vector databases: Scale up for faster similarity search
 
 ### Cost Optimization
+
 - Auto-scale down during low traffic
 - Spot instances for non-critical workloads
 - Tiered storage (hot/warm/cold)
@@ -482,15 +515,18 @@ jobs:
 ## Disaster Recovery
 
 ### Backup Strategy
+
 - **ClickHouse:** Daily snapshots + continuous binlog
 - **PostgreSQL:** Point-in-time recovery (WAL)
 - **Qdrant:** Daily backups + replication
 
 ### RPO/RTO Targets
+
 - **RPO:** < 1 minute (data loss tolerance)
 - **RTO:** < 15 minutes (recovery time)
 
 ### Geographic Distribution
+
 - Multi-region deployment
 - Active-passive failover
 - DNS-based traffic routing
@@ -498,12 +534,14 @@ jobs:
 ## Performance Benchmarks
 
 ### Target Performance
+
 - **Query latency:** P95 < 1s for 1B rows
 - **Write throughput:** 1M events/sec
 - **Concurrent users:** 10,000+
 - **Availability:** 99.9% SLA
 
 ### Optimization Techniques
+
 - Materialized views for common queries
 - Pre-aggregated tables
 - Query result caching (Redis)
@@ -512,6 +550,7 @@ jobs:
 ---
 
 **Implementation Priority:**
+
 1. Foundation (K8s + ClickHouse)
 2. API Gateway + Auth
 3. Core agents (Query + Designer)

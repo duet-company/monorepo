@@ -18,6 +18,7 @@ curl -fsSL https://bun.sh/install | bash
 ### Installing Node.js
 
 Using `nvm` (recommended):
+
 ```bash
 nvm install 20
 nvm use 20
@@ -54,6 +55,7 @@ bun install
 ```
 
 This will install dependencies for all apps and packages:
+
 - `apps/web` - Next.js frontend
 - `apps/api` - FastAPI backend
 - `packages/*` - Shared packages

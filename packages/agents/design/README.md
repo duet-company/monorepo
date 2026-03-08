@@ -5,6 +5,7 @@ AI-powered infrastructure and schema designer for Duet Company.
 ## 🎯 Purpose
 
 Automates data platform design from natural language requirements:
+
 - Schema design
 - Infrastructure provisioning
 - Dashboard creation
@@ -20,6 +21,7 @@ Automates data platform design from natural language requirements:
 ## 🧠 Models
 
 Supports multiple LLM providers:
+
 - Claude (Anthropic)
 - GPT-4 (OpenAI)
 - GLM-5 (Z.AI)
@@ -27,6 +29,7 @@ Supports multiple LLM providers:
 ## 🏗️ Infrastructure
 
 Automates provisioning of:
+
 - ClickHouse clusters
 - PostgreSQL databases
 - Kubernetes resources

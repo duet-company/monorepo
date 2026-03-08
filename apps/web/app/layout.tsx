@@ -3,7 +3,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Duet Company - AI-First Data Infrastructure',
-  description: 'Autonomous AI agents design, deploy, and manage scalable data platforms. 90% less cost, 100x faster queries.',
+  description:
+    'Autonomous AI agents design, deploy, and manage scalable data platforms. 90% less cost, 100x faster queries.',
   keywords: ['data infrastructure', 'AI agents', 'ClickHouse', 'analytics', 'data platform'],
   authors: [{ name: 'Duet Company' }],
   openGraph: {
@@ -20,16 +21,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        {children}
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

@@ -5,6 +5,7 @@ Deploy Duet Company to Cloudflare Pages and Workers.
 ## Overview
 
 Duet Company is designed to deploy to Cloudflare's edge network:
+
 - **Cloudflare Pages** - Next.js frontend
 - **Cloudflare Workers** - API edge functions
 - **Cloudflare D1** - SQLite database at the edge
@@ -56,7 +57,8 @@ wrangler d1 execute duet-company-prod --file=infrastructure/cloudflare/d1/schema
 
 1. **Fork the repository** to your GitHub account
 2. **Configure secrets** in GitHub repository settings:
-   - `CLOUDFLARE_API_TOKEN` - Create at Cloudflare Dashboard > My Profile > API Tokens
+   - `CLOUDFLARE_API_TOKEN` - Create at Cloudflare Dashboard > My Profile > API
+     Tokens
    - `CLOUDFLARE_ACCOUNT_ID` - Found in Cloudflare URL
 3. **Push to main branch** - CI/CD will automatically deploy
 
@@ -90,11 +92,11 @@ wrangler pages deploy .next --project-name=duet-company-web
 
 Add these records in your Cloudflare DNS settings:
 
-| Type | Name | Content | Proxy |
-|------|------|---------|-------|
-| A | duet | Your server IP | Proxied |
-| CNAME | api | duet.company.workers.dev | Proxied |
-| CNAME | www | duet.company | Proxied |
+| Type  | Name | Content                  | Proxy   |
+| ----- | ---- | ------------------------ | ------- |
+| A     | duet | Your server IP           | Proxied |
+| CNAME | api  | duet.company.workers.dev | Proxied |
+| CNAME | www  | duet.company             | Proxied |
 
 ### Configure Custom Domains in Wrangler
 
@@ -187,12 +189,12 @@ The GitHub Actions workflows automate deployment:
 
 ## Cost Estimation
 
-| Service | Free Tier | Paid Usage |
-|---------|-----------|------------|
-| Pages | Unlimited bandwidth | $0/month |
-| Workers | 100k requests/day | $5/month per 10M requests |
-| D1 | 5GB storage, 25M reads/day | $0.25/GB-month, $0.50 per 1M reads |
-| KV | 100k reads/day, 1k writes/day | $0.50 per 1M reads |
+| Service | Free Tier                     | Paid Usage                         |
+| ------- | ----------------------------- | ---------------------------------- |
+| Pages   | Unlimited bandwidth           | $0/month                           |
+| Workers | 100k requests/day             | $5/month per 10M requests          |
+| D1      | 5GB storage, 25M reads/day    | $0.25/GB-month, $0.50 per 1M reads |
+| KV      | 100k reads/day, 1k writes/day | $0.50 per 1M reads                 |
 
 Estimated cost for small production: **$0-20/month**
 

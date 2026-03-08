@@ -116,12 +116,12 @@ The Operations Agent manages infrastructure autonomously.
 
 ### Auto-Scaling Rules
 
-| Metric | Threshold | Action |
-|--------|-----------|--------|
-| CPU > 80% | 5 minutes | Add replica |
-| Memory > 85% | 5 minutes | Add replica |
+| Metric             | Threshold  | Action      |
+| ------------------ | ---------- | ----------- |
+| CPU > 80%          | 5 minutes  | Add replica |
+| Memory > 85%       | 5 minutes  | Add replica |
 | Query latency > 5s | 10 minutes | Investigate |
-| Error rate > 5% | 5 minutes | Alert |
+| Error rate > 5%    | 5 minutes  | Alert       |
 
 ## Agent Configuration
 
@@ -151,24 +151,24 @@ Agents are configured via environment variables and config files:
 
 ## Supported LLM Models
 
-| Provider | Model | Best For |
-|----------|-------|----------|
-| Anthropic | Claude 3 Opus | Complex reasoning |
+| Provider  | Model           | Best For                     |
+| --------- | --------------- | ---------------------------- |
+| Anthropic | Claude 3 Opus   | Complex reasoning            |
 | Anthropic | Claude 3 Sonnet | Balance of speed and quality |
-| OpenAI | GPT-4 Turbo | General purpose |
-| Google | Gemini Pro | Long context |
-| X.AI | Grok | Real-time knowledge |
+| OpenAI    | GPT-4 Turbo     | General purpose              |
+| Google    | Gemini Pro      | Long context                 |
+| X.AI      | Grok            | Real-time knowledge          |
 
 ## Agent Performance
 
 ### Benchmarks
 
-| Agent | Response Time | Accuracy | Cost per 1k calls |
-|-------|--------------|----------|-------------------|
-| Query | 2-5s | 94% | $0.15 |
-| Design | 5-15s | 89% | $0.45 |
-| Support | 1-3s | 91% | $0.08 |
-| Operations | <1s | N/A | $0.02 |
+| Agent      | Response Time | Accuracy | Cost per 1k calls |
+| ---------- | ------------- | -------- | ----------------- |
+| Query      | 2-5s          | 94%      | $0.15             |
+| Design     | 5-15s         | 89%      | $0.45             |
+| Support    | 1-3s          | 91%      | $0.08             |
+| Operations | <1s           | N/A      | $0.02             |
 
 ## Extending Agents
 

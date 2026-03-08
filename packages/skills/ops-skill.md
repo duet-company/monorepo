@@ -4,7 +4,8 @@ Infrastructure monitoring and operations automation agent skill.
 
 ## 🎯 Purpose
 
-Automates infrastructure operations including monitoring, alerting, auto-scaling, health checks, and self-healing for the Duet Company platform.
+Automates infrastructure operations including monitoring, alerting,
+auto-scaling, health checks, and self-healing for the Duet Company platform.
 
 ## 🚀 Usage
 
@@ -75,33 +76,33 @@ operations:
     prometheus: ${PROMETHEUS_URL}
     grafana: ${GRAFANA_URL}
     alert_webhook: ${ALERT_WEBHOOK}
-  
+
   kubernetes:
     config: ${KUBECONFIG}
     namespace: ${NAMESPACE}
-  
+
   auto_scaling:
     enabled: ${AUTO_SCALE_ENABLED}
     scale_up_threshold: ${SCALE_UP_THRESHOLD}
     scale_down_threshold: ${SCALE_DOWN_THRESHOLD}
     min_replicas: ${MIN_REPLICAS}
     max_replicas: ${MAX_REPLICAS}
-  
+
   self_healing:
     enabled: ${SELF_HEAL_ENABLED}
     health_check_interval: ${HEALTH_CHECK_INTERVAL}
     restart_threshold: ${RESTART_THRESHOLD}
     replacement_threshold: ${REPLACEMENT_THRESHOLD}
-  
+
   cloud:
     provider: ${CLOUD_PROVIDER}
     api_key: ${CLOUD_API_KEY}
-  
+
   llm:
     provider: ${LLM_PROVIDER}
     model: ${LLM_MODEL}
     api_key: ${LLM_API_KEY}
-  
+
   alerting:
     enabled: ${ALERT_ENABLED}
     cooldown: ${ALERT_COOLDOWN}
@@ -143,8 +144,7 @@ Automatic Actions Taken:
    - Team notified of scale event
    - Dashboard link provided
 
-Resolution: Auto-scaled from 3 to 5 replicas
-Time to resolution: 3 minutes
+Resolution: Auto-scaled from 3 to 5 replicas Time to resolution: 3 minutes
 ```
 
 ### Database Connection Failure
@@ -181,8 +181,7 @@ Automatic Actions Taken:
    - Monitoring query patterns
    - Scheduled review
 
-Resolution: Self-healed via restart and scale
-Time to resolution: 8 minutes
+Resolution: Self-healed via restart and scale Time to resolution: 8 minutes
 Incident: INC-2026-02-16-001
 ```
 
@@ -219,8 +218,7 @@ Automatic Actions Taken:
    - Cleanup summary sent
    - Future action plan provided
 
-Resolution: Automated cleanup freed 200GB
-Time to resolution: 5 minutes
+Resolution: Automated cleanup freed 200GB Time to resolution: 5 minutes
 ```
 
 ## 🐛 Troubleshooting
@@ -228,12 +226,14 @@ Time to resolution: 5 minutes
 ### Issue: False positive alerts
 
 **Possible causes:**
+
 - Thresholds too aggressive
 - Temporary traffic spikes
 - Monitoring lag
 - Metric collection issues
 
 **Solutions:**
+
 1. Review alert history: `ops-skill --alert-history`
 2. Adjust thresholds: `ops-skill --update-threshold`
 3. Add cooldown period: Already configured (5m)
@@ -242,12 +242,14 @@ Time to resolution: 5 minutes
 ### Issue: Auto-scaling thrashing
 
 **Possible causes:**
+
 - Scale up/down thresholds too close
 - Health check interval too short
 - Load not stabilized
 - Application startup time
 
 **Solutions:**
+
 1. Widen thresholds: e.g., 80% → 85%, 30% → 25%
 2. Increase cooldown: 5m → 15m
 3. Check application startup: Ensure pods ready before considering
@@ -256,12 +258,14 @@ Time to resolution: 5 minutes
 ### Issue: Self-healing loops
 
 **Possible causes:**
+
 - Underlying issue not fixed
 - Health check incorrect
 - Restart not sufficient
 - Configuration error
 
 **Solutions:**
+
 1. Check restart threshold: Limit consecutive restarts
 2. Validate health checks: Ensure they're accurate
 3. Replace instead of restart: After threshold reached
@@ -271,13 +275,13 @@ Time to resolution: 5 minutes
 
 ### Service Health Matrix
 
-| Service | Check Type | Frequency | Threshold | Action |
-|----------|------------|-----------|-----------|---------|
-| Backend | HTTP /health | 30s | 200 OK → None |
-| Frontend | HTTP /health | 30s | 200 OK → None |
-| ClickHouse | TCP 8123 | 30s | Open → Scale |
-| PostgreSQL | TCP 5432 | 30s | Open → Scale |
-| Redis | TCP 6379 | 30s | Open → None |
+| Service    | Check Type   | Frequency | Threshold     | Action |
+| ---------- | ------------ | --------- | ------------- | ------ |
+| Backend    | HTTP /health | 30s       | 200 OK → None |
+| Frontend   | HTTP /health | 30s       | 200 OK → None |
+| ClickHouse | TCP 8123     | 30s       | Open → Scale  |
+| PostgreSQL | TCP 5432     | 30s       | Open → Scale  |
+| Redis      | TCP 6379     | 30s       | Open → None   |
 
 ### Auto-scaling Rules
 
@@ -316,6 +320,5 @@ scale_out:
 
 ---
 
-**Skill Version:** 1.0.0
-**Last Updated:** 2026-02-16
-**Maintainer:** Duet Company AI Team
+**Skill Version:** 1.0.0 **Last Updated:** 2026-02-16 **Maintainer:** Duet
+Company AI Team

@@ -4,9 +4,8 @@
 
 Autonomous execution plan for building Duet Company from concept to launch.
 
-**Timeline:** 16 weeks (4 months)
-**Team:** 1 human (Duyet) + AI agents (autonomous)
-**Budget:** Self-funded initially
+**Timeline:** 16 weeks (4 months) **Team:** 1 human (Duyet) + AI agents
+(autonomous) **Budget:** Self-funded initially
 
 ---
 
@@ -15,6 +14,7 @@ Autonomous execution plan for building Duet Company from concept to launch.
 ### Week 1: Legal & Brand
 
 **AI Agents:**
+
 - [x] Company vision and strategy document
 - [ ] Business registration (Singapore C-Corp)
 - [ ] Domain acquisition (duet.ai or similar)
@@ -22,6 +22,7 @@ Autonomous execution plan for building Duet Company from concept to launch.
 - [ ] Marketing website structure
 
 **Tasks:**
+
 1. Register company with ACRA (Singapore)
 2. Set up company email accounts
 3. Register domain name
@@ -31,6 +32,7 @@ Autonomous execution plan for building Duet Company from concept to launch.
 ### Week 2: Infrastructure Setup
 
 **AI Agents:**
+
 - [ ] Infrastructure provisioning script
 - [ ] Kubernetes cluster setup (microk8s)
 - [ ] CI/CD pipeline (GitHub Actions)
@@ -38,6 +40,7 @@ Autonomous execution plan for building Duet Company from concept to launch.
 - [ ] Logging infrastructure (Loki)
 
 **Technical Tasks:**
+
 ```bash
 # Infrastructure as code
 ./scripts/provision-infra.sh
@@ -50,6 +53,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 ```
 
 **Infrastructure:**
+
 - VPS: DigitalOcean / Hetzner
 - Kubernetes: microk8s
 - Storage: Persistent volumes
@@ -58,6 +62,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 ### Week 3: Core Platform
 
 **AI Agents:**
+
 - [ ] ClickHouse deployment
 - [ ] PostgreSQL metadata store
 - [ ] API gateway (Kong)
@@ -65,6 +70,7 @@ helm install prometheus prometheus-community/kube-prometheus-stack
 - [ ] Basic REST API endpoints
 
 **Database Setup:**
+
 ```sql
 -- ClickHouse initialization
 CREATE DATABASE duet;
@@ -73,6 +79,7 @@ CREATE TABLE platforms (...);
 ```
 
 **API Endpoints:**
+
 ```python
 # FastAPI application
 from fastapi import FastAPI
@@ -92,6 +99,7 @@ async def health_check():
 ### Week 4: AI Agent Framework
 
 **AI Agents:**
+
 - [ ] Agent orchestrator base class
 - [ ] Tool system (MCP-compatible)
 - [ ] First agent: Query Agent (NL → SQL)
@@ -99,6 +107,7 @@ async def health_check():
 - [ ] Agent metrics collection
 
 **Agent Architecture:**
+
 ```typescript
 class QueryAgent extends Agent {
   async process(query: string): Promise<QueryResult> {
@@ -117,6 +126,7 @@ class QueryAgent extends Agent {
 ### Week 5: Platform Designer Agent
 
 **Features:**
+
 - [ ] Schema design from natural language requirements
 - [ ] ClickHouse DDL generation
 - [ ] Infrastructure provisioning (K8s manifests)
@@ -124,6 +134,7 @@ class QueryAgent extends Agent {
 - [ ] Data connector setup
 
 **Example Flow:**
+
 ```
 User: "I need an events table with timestamps, user_id, event_type"
 AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
@@ -132,6 +143,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 6: Query Agent Enhancements
 
 **Features:**
+
 - [ ] Advanced SQL generation (JOINs, subqueries)
 - [ ] Query optimization suggestions
 - [ ] Result visualization (charts, tables)
@@ -139,6 +151,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Query templates library
 
 **Supported Query Types:**
+
 - Time series analysis
 - Aggregation and grouping
 - Filtering and sorting
@@ -147,6 +160,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 7: Monitoring & Observability
 
 **Features:**
+
 - [ ] Platform metrics dashboard
 - [ ] Alert system (email, Slack, Telegram)
 - [ ] Log aggregation and search
@@ -154,6 +168,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Cost tracking dashboard
 
 **Key Metrics:**
+
 - Query latency (P50, P95, P99)
 - Throughput (queries/sec)
 - Error rates
@@ -162,6 +177,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 8: User Experience
 
 **Features:**
+
 - [ ] Web dashboard (React + TypeScript)
 - [ ] Natural language query interface
 - [ ] Visual query builder
@@ -169,6 +185,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Platform management UI
 
 **UI Components:**
+
 ```
 ┌────────────────────────────────────────────┐
 │  Query: Show me revenue by month          │
@@ -192,6 +209,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 9: First Design Partner
 
 **Tasks:**
+
 - [ ] Select design partner (tech company, high data volume)
 - [ ] Onboarding flow
 - [ ] Data migration (if needed)
@@ -199,6 +217,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Support channel setup
 
 **Onboarding Checklist:**
+
 1. OAuth setup
 2. Data connector configuration
 3. Initial platform design
@@ -208,6 +227,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 10: Feedback & Iteration
 
 **Activities:**
+
 - [ ] Collect user feedback (interviews, surveys)
 - [ ] Prioritize feature requests
 - [ ] Fix critical bugs
@@ -215,6 +235,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Documentation updates
 
 **Feedback Collection:**
+
 - Weekly sync with design partner
 - In-app feedback widget
 - Support ticket analysis
@@ -223,6 +244,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 ### Week 11: Additional Beta Users
 
 **Tasks:**
+
 - [ ] Onboard 4 more beta users
 - [ ] Scale testing (load testing)
 - [ ] Security audit
@@ -230,6 +252,7 @@ AI: Generates schema → Deploys ClickHouse table → Sets up Grafana dashboard
 - [ ] Pricing model validation
 
 **Load Testing:**
+
 ```bash
 # K6 load test
 k6 run --vus 100 --duration 10m tests/load-test.js
@@ -238,6 +261,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Week 12: Beta Wrap-up
 
 **Deliverables:**
+
 - [ ] Beta report (metrics, feedback, learnings)
 - [ ] Feature prioritization for v1.0
 - [ ] Marketing materials (case study, testimonials)
@@ -251,6 +275,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Week 13: Production Hardening
 
 **Tasks:**
+
 - [ ] Security hardening
 - [ ] Disaster recovery testing
 - [ ] Performance optimization
@@ -258,6 +283,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Incident response procedures
 
 **Security Checklist:**
+
 - Penetration testing
 - Dependency vulnerability scanning
 - Secrets management audit
@@ -266,6 +292,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Week 14: Billing & Subscriptions
 
 **Features:**
+
 - [ ] Stripe integration
 - [ ] Subscription tiers (Starter, Growth, Enterprise)
 - [ ] Usage-based billing
@@ -273,6 +300,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Payment failure handling
 
 **Pricing:**
+
 - Starter: $999/month
 - Growth: $2,999/month
 - Enterprise: Custom
@@ -280,6 +308,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Week 15: Marketing & Launch
 
 **Tasks:**
+
 - [ ] Website launch
 - [ ] Product Hunt launch
 - [ ] Hacker News post
@@ -287,6 +316,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Social media campaign
 
 **Launch Day Checklist:**
+
 - [ ] All systems operational
 - [ ] Monitoring alerts configured
 - [ ] Support team ready (AI agents)
@@ -296,6 +326,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Week 16: Post-Launch
 
 **Focus:**
+
 - [ ] User onboarding
 - [ ] Support tickets
 - [ ] Performance monitoring
@@ -303,6 +334,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Customer success
 
 **Week 1 Metrics:**
+
 - Sign-ups
 - Active users
 - Queries executed
@@ -316,6 +348,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Must-Have Features (MVP)
 
 **Platform:**
+
 - [x] Company concept and strategy
 - [ ] ClickHouse database
 - [ ] PostgreSQL metadata
@@ -323,11 +356,13 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Authentication system
 
 **AI Agents:**
+
 - [ ] Query Agent (NL → SQL)
 - [ ] Platform Designer Agent
 - [ ] Support Agent (basic)
 
 **User Interface:**
+
 - [ ] Web dashboard
 - [ ] Natural language query input
 - [ ] Results display
@@ -336,6 +371,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Should-Have Features (v1.0)
 
 **Platform:**
+
 - [ ] Multi-tenant isolation
 - [ ] Data connectors (PostgreSQL, MySQL, Kafka)
 - [ ] Real-time streaming
@@ -343,12 +379,14 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Query templates
 
 **AI Agents:**
+
 - [ ] Query optimization
 - [ ] Anomaly detection
 - [ ] Forecasting
 - [ ] Auto-dashboard generation
 
 **User Interface:**
+
 - [ ] Visual query builder
 - [ ] Collaboration features
 - [ ] Query sharing
@@ -357,6 +395,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ### Nice-to-Have Features (v2.0)
 
 **Platform:**
+
 - [ ] Custom model training
 - [ ] Advanced ML models
 - [ ] White-labeling
@@ -364,6 +403,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 - [ ] Custom integrations
 
 **AI Agents:**
+
 - [ ] Predictive analytics
 - [ ] Automated insights
 - [ ] Natural language alerts
@@ -374,6 +414,7 @@ k6 run --vus 100 --duration 10m tests/load-test.js
 ## Development Workflow
 
 ### Branch Strategy
+
 ```
 main (production)
   └── develop (integration)
@@ -383,6 +424,7 @@ main (production)
 ```
 
 ### PR Process
+
 1. Create feature branch from develop
 2. Implement feature
 3. Write tests
@@ -395,6 +437,7 @@ main (production)
 10. Deploy to production
 
 ### Deployment Pipeline
+
 ```
 git push → GitHub Actions → Tests → Build → Deploy
 ```
@@ -404,18 +447,21 @@ git push → GitHub Actions → Tests → Build → Deploy
 ## Success Criteria
 
 ### Technical Success
+
 - [ ] 99.9% uptime SLA achieved
 - [ ] P95 query latency < 1s
 - [ ] 10,000+ concurrent users supported
 - [ ] Security audit passed
 
 ### Business Success
+
 - [ ] 10 beta users onboarded
 - [ ] 50 paying customers by end of Month 6
 - [ ] $100K MRR by Month 6
 - [ ] NPS > 50
 
 ### Product Success
+
 - [ ] Query agent accuracy > 90%
 - [ ] Platform setup time < 4 hours
 - [ ] User satisfaction > 4.5/5
@@ -426,27 +472,29 @@ git push → GitHub Actions → Tests → Build → Deploy
 ## Risk Mitigation
 
 ### Technical Risks
-**Risk:** AI agent hallucinations
-**Mitigation:**
+
+**Risk:** AI agent hallucinations **Mitigation:**
+
 - Human-in-the-loop for critical ops
 - Query validation before execution
 - Rollback capabilities
 
-**Risk:** Performance at scale
-**Mitigation:**
+**Risk:** Performance at scale **Mitigation:**
+
 - Load testing before launch
 - Horizontal scaling design
 - Query optimization rules
 
 ### Business Risks
-**Risk:** Slow adoption
-**Mitigation:**
+
+**Risk:** Slow adoption **Mitigation:**
+
 - Free tier for testing
 - Strong content marketing
 - Partner channels
 
-**Risk:** Competition
-**Mitigation:**
+**Risk:** Competition **Mitigation:**
+
 - Open source advantage
 - AI-first differentiation
 - Fast iteration
@@ -456,6 +504,7 @@ git push → GitHub Actions → Tests → Build → Deploy
 ## Resource Requirements
 
 ### Infrastructure Costs (Monthly)
+
 - VPS: $500-1,000
 - Storage: $200-500
 - Bandwidth: $100-300
@@ -463,12 +512,14 @@ git push → GitHub Actions → Tests → Build → Deploy
 - **Total: ~$1,000-2,000/month**
 
 ### Development Tools
+
 - GitHub: Free
 - Vercel (hosting): $20/month
 - Domain: $12/year
 - SSL certificates: Free (Let's Encrypt)
 
 ### AI API Costs
+
 - LLM API calls: $200-500/month (initial)
 - Scales with usage
 
@@ -477,6 +528,7 @@ git push → GitHub Actions → Tests → Build → Deploy
 ## Next Immediate Actions
 
 ### Today
+
 - [x] Create company strategy document
 - [x] Design technical architecture
 - [x] Create execution roadmap
@@ -484,6 +536,7 @@ git push → GitHub Actions → Tests → Build → Deploy
 - [ ] Initialize project structure
 
 ### This Week
+
 - [ ] Register company
 - [ ] Acquire domain
 - [ ] Set up infrastructure
@@ -491,6 +544,7 @@ git push → GitHub Actions → Tests → Build → Deploy
 - [ ] Build MVP prototype
 
 ### Next 30 Days
+
 - [ ] Complete MVP
 - [ ] Onboard first design partner
 - [ ] Launch beta
@@ -499,6 +553,5 @@ git push → GitHub Actions → Tests → Build → Deploy
 
 ---
 
-**Status:** Ready to execute autonomously.
-**Confidence:** High - clear roadmap, proven technologies, strong expertise.
-**Go signal:** 🚀 LAUNCH AUTONOMOUSLY
+**Status:** Ready to execute autonomously. **Confidence:** High - clear roadmap,
+proven technologies, strong expertise. **Go signal:** 🚀 LAUNCH AUTONOMOUSLY

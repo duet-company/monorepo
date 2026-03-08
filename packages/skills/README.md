@@ -24,21 +24,27 @@ Each skill follows the OpenClaw SKILL.md format:
 Short description of what this skill does.
 
 ## 🎯 Purpose
+
 What problem does this skill solve?
 
 ## 🚀 Usage
+
 How to use this skill with code examples.
 
 ## 📚 Dependencies
+
 What other skills/tools are needed?
 
 ## 🔧 Configuration
+
 Any required configuration or environment variables.
 
 ## 📖 Examples
+
 Real-world usage examples.
 
 ## 🐛 Troubleshooting
+
 Common issues and solutions.
 ```
 
@@ -74,5 +80,4 @@ Common issues and solutions.
 
 ---
 
-**Maintainer:** AI Engineering Team
-**Last Updated:** 2026-02-16
+**Maintainer:** AI Engineering Team **Last Updated:** 2026-02-16
