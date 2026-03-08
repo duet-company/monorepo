@@ -1,0 +1,18 @@
+{
+  "name": "duet-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Duet Company - FastAPI backend",
+  "scripts": {
+    "dev": "uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "build": "echo 'Build complete - Python uses runtime compilation'",
+    "start": "uvicorn app.main:app --host 0.0.0.0 --port 8000",
+    "test": "pytest",
+    "lint": "ruff check app",
+    "typecheck": "mypy app"
+  },
+  "dependencies": {
+    "@duet-company/shared": "workspace:*",
+    "@duet-company/config": "workspace:*"
+  }
+}

@@ -1,0 +1,207 @@
+# Duet Company - AI Documentation
+
+This file provides AI-friendly documentation for the Duet Company codebase.
+
+## Project Overview
+
+Duet Company is an AI-first data infrastructure platform. We help companies build and manage scalable data platforms using AI agents.
+
+## Quick Links
+
+- **Repository:** https://github.com/duet-company/duet-company
+- **Documentation:** /docs
+- **API:** /docs/api/rest-api.md
+- **Vision:** /docs/company/vision.md
+
+## Monorepo Structure
+
+```
+duet-company/
+├── apps/
+│   ├── web/          # Next.js 14 frontend (TypeScript/React)
+│   └── api/          # FastAPI backend (Python)
+├── packages/
+│   ├── shared/       # Shared TypeScript utilities and types
+│   ├── ui/           # Shared React components
+│   ├── config/       # Shared configuration files
+│   ├── agents/       # AI agent implementations
+│   └── skills/       # OpenClaw skill definitions
+├── infrastructure/
+│   └── cloudflare/   # Cloudflare Workers, Pages, D1 configs
+├── docs/             # Comprehensive documentation
+└── scripts/          # Build and deployment scripts
+```
+
+## Tech Stack
+
+### Frontend
+- **Framework:** Next.js 14 (React 18)
+- **Language:** TypeScript 5.3
+- **Styling:** Tailwind CSS 3
+- **State:** TanStack Query 5
+- **Build:** Bun 1.0+
+
+### Backend
+- **Framework:** FastAPI (Python 3.10+)
+- **Database:** ClickHouse (analytics), PostgreSQL (metadata)
+- **AI:** Claude, GPT-4, Gemini (multi-model)
+- **Deployment:** Cloudflare Workers
+
+### DevOps
+- **Package Manager:** Bun workspaces
+- **CI/CD:** GitHub Actions
+- **Hosting:** Cloudflare Pages & Workers
+- **Database:** Cloudflare D1 (SQLite at edge)
+
+## Key Commands
+
+```bash
+# Install all dependencies
+bun install
+
+# Start all apps in development
+bun run dev
+
+# Build all packages and apps
+bun run build
+
+# Run tests
+bun run test
+
+# Run linter
+bun run lint
+
+# Type check
+bun run typecheck
+
+# Format code
+bun run format
+```
+
+## AI Agents
+
+### Query Agent
+Converts natural language to SQL queries.
+- Location: `packages/agents/query/`
+- Entry point: Query requests to `/api/v1/agents/query`
+
+### Design Agent
+Designs data platforms from requirements.
+- Location: `packages/agents/design/`
+- Entry point: Design requests to `/api/v1/agents/design`
+
+### Support Agent
+Provides customer support.
+- Location: `packages/agents/support/`
+- Entry point: Support requests to `/api/v1/agents/support`
+
+## API Endpoints
+
+### Health
+- `GET /health` - Health check
+
+### Platforms
+- `GET /api/v1/platforms` - List platforms
+- `POST /api/v1/platforms` - Create platform
+- `GET /api/v1/platforms/{id}` - Get platform
+- `DELETE /api/v1/platforms/{id}` - Delete platform
+
+### Agents
+- `GET /api/v1/agents` - List agents
+- `POST /api/v1/agents/query` - Execute query
+- `POST /api/v1/agents/design` - Design platform
+
+### Data
+- `POST /api/v1/data/query` - Execute SQL
+- `GET /api/v1/data/schema` - Get schema
+
+### Monitoring
+- `GET /api/v1/monitoring/metrics` - Get metrics
+- `GET /api/v1/monitoring/alerts` - Get alerts
+
+## Environment Variables
+
+### Frontend (apps/web/.env.local)
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Backend (apps/api/.env)
+```env
+DATABASE_URL=postgresql://...
+CLICKHOUSE_URL=clickhouse://...
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+JWT_SECRET=...
+ENVIRONMENT=development
+```
+
+## Development Workflow
+
+1. Make changes in `apps/` or `packages/`
+2. Run `bun run typecheck` to verify types
+3. Run `bun run lint` to check code style
+4. Test locally with `bun run dev`
+5. Commit changes with conventional commits
+6. Push to trigger CI/CD
+
+## Deployment
+
+### Automatic
+- Push to `main` branch
+- GitHub Actions runs CI/CD
+- Deploys to Cloudflare automatically
+
+### Manual
+```bash
+# Deploy API Worker
+cd infrastructure/cloudflare/workers
+wrangler deploy api-worker.ts
+
+# Deploy Web App
+cd apps/web
+bun run build
+wrangler pages deploy .next
+```
+
+## Common Patterns
+
+### Shared Types
+Import from `@duet-company/shared`:
+```typescript
+import { User, Platform, AgentResponse } from '@duet-company/shared';
+```
+
+### Shared Components
+Import from `@duet-company/ui`:
+```typescript
+import { Button, Card, Input } from '@duet-company/ui';
+```
+
+### API Calls
+Use the shared API client (in packages/shared/src/utils/api.ts).
+
+## Troubleshooting
+
+### Type Errors
+- Run `bun install` to ensure dependencies are linked
+- Check `tsconfig.json` extends the base config
+
+### Build Errors
+- Clean with `rm -rf node_modules .next`
+- Reinstall with `bun install`
+
+### Runtime Errors
+- Check environment variables are set
+- Verify Cloudflare configuration
+
+## Support
+
+- **Docs:** /docs
+- **Issues:** https://github.com/duet-company/duet-company/issues
+- **Email:** hello@duet.company
+
+## License
+
+Proprietary - All rights reserved. Duet Company © 2025

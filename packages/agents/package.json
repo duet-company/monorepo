@@ -1,0 +1,19 @@
+{
+  "name": "@duet-company/agents",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./query": "./query/index.ts",
+    "./design": "./design/index.ts",
+    "./support": "./support/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+name = "duet-company-api"
+main = "workers/api-worker.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "duet-company-api"
+routes = [
+  { pattern = "api.duet.company/*", zone_name = "duet.company" }
+]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "duet-company-prod"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "YOUR_KV_NAMESPACE_ID"
+
+[vars]
+ENVIRONMENT = "production"
+LOG_LEVEL = "info"
