@@ -8,15 +8,37 @@ routes = [
   { pattern = "api.duet.company/*", zone_name = "duet.company" }
 ]
 
+[env.preview]
+name = "duet-company-api-preview"
+
+# AI Gateway Configuration
+[ai]
+binding = "AI"
+gateway_id = "YOUR_GATEWAY_ID"
+
+# D1 Database (SQLite at edge)
 [[d1_databases]]
 binding = "DB"
 database_name = "duet-company-prod"
 database_id = "YOUR_D1_DATABASE_ID"
 
+# KV Namespace for caching
 [[kv_namespaces]]
 binding = "CACHE"
 id = "YOUR_KV_NAMESPACE_ID"
 
+# Environment Variables
 [vars]
 ENVIRONMENT = "production"
 LOG_LEVEL = "info"
+CLOUDFLARE_AI_GATEWAY_ID = "YOUR_GATEWAY_ID"
+ENABLE_AI_GATEWAY = "true"
+
+# Environment-specific variables
+[env.production.vars]
+ENVIRONMENT = "production"
+LOG_LEVEL = "info"
+
+[env.preview.vars]
+ENVIRONMENT = "preview"
+LOG_LEVEL = "debug"

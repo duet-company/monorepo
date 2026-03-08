@@ -10,6 +10,7 @@ Duet Company is designed to deploy to Cloudflare's edge network:
 - **Cloudflare Workers** - API edge functions
 - **Cloudflare D1** - SQLite database at the edge
 - **Cloudflare KV** - Key-value storage for caching
+- **Cloudflare AI Gateway** - LLM observability and rate limiting
 
 ## Prerequisites
 
@@ -44,7 +45,31 @@ wrangler kv:namespace create CACHE
 # Update infrastructure/cloudflare/wrangler.toml with the ID
 ```
 
-### 3. Run Database Migrations
+### 3. Setup AI Gateway
+
+```bash
+# Create AI Gateway (via Cloudflare Dashboard)
+# Visit: https://dash.cloudflare.com/ai/gateway
+
+# Create a new gateway with:
+# - Gateway Name: duet-company-prod
+# - Providers: OpenAI, Anthropic
+# - Rate Limits: 100 requests/minute per user
+# - Caching: Enabled with 1 hour TTL
+
+# Note the gateway_id from the dashboard
+# Update infrastructure/cloudflare/wrangler.toml with the ID
+```
+
+### 4. Configure AI Provider Keys
+
+```bash
+# Set secrets for AI providers
+wrangler secret put OPENAI_API_KEY
+wrangler secret put ANTHROPIC_API_KEY
+```
+
+### 5. Run Database Migrations
 
 ```bash
 # Apply schema to D1 database
@@ -60,6 +85,9 @@ wrangler d1 execute duet-company-prod --file=infrastructure/cloudflare/d1/schema
    - `CLOUDFLARE_API_TOKEN` - Create at Cloudflare Dashboard > My Profile > API
      Tokens
    - `CLOUDFLARE_ACCOUNT_ID` - Found in Cloudflare URL
+   - `CLOUDFLARE_AI_GATEWAY_ID` - Your AI Gateway ID
+   - `OPENAI_API_KEY` - OpenAI API key
+   - `ANTHROPIC_API_KEY` - Anthropic API key
 3. **Push to main branch** - CI/CD will automatically deploy
 
 ### Option 2: Manual Deployment with Wrangler
@@ -115,10 +143,69 @@ routes = [
 Set these in your Cloudflare Workers dashboard or via `wrangler secret`:
 
 ```bash
-# API secrets
+# AI Gateway
+wrangler secret put CLOUDFLARE_AI_GATEWAY_ID
 wrangler secret put OPENAI_API_KEY
 wrangler secret put ANTHROPIC_API_KEY
+
+# Database
+wrangler secret put DATABASE_URL
 wrangler secret put JWT_SECRET
+
+# Application
+wrangler secret put ENVIRONMENT
+```
+
+## AI Gateway Configuration
+
+### Gateway Settings
+
+Configure in Cloudflare Dashboard > AI > Gateway:
+
+```json
+{
+  "name": "duet-company-prod",
+  "providers": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "api_key": "OPENAI_API_KEY",
+      "models": ["gpt-4", "gpt-4-turbo-preview", "gpt-3.5-turbo"],
+      "rate_limit": {
+        "requests_per_minute": 100,
+        "tokens_per_minute": 100000
+      },
+      "cache": {
+        "enabled": true,
+        "ttl": 3600
+      }
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "api_key": "ANTHROPIC_API_KEY",
+      "models": ["claude-3-opus", "claude-3-sonnet", "claude-2"],
+      "rate_limit": {
+        "requests_per_minute": 50,
+        "tokens_per_minute": 50000
+      },
+      "cache": {
+        "enabled": true,
+        "ttl": 3600
+      }
+    }
+  ]
+}
+```
+
+### Gateway Endpoints
+
+```bash
+# OpenAI GPT-4
+https://gateway.ai.cloudflare.com/v1/openai/gpt-4
+
+# Anthropic Claude 3
+https://gateway.ai.cloudflare.com/v1/anthropic/claude-3-opus
 ```
 
 ## Monitoring and Logs
@@ -128,6 +215,18 @@ wrangler secret put JWT_SECRET
 ```bash
 wrangler tail --format pretty
 ```
+
+### View AI Gateway Analytics
+
+Visit Cloudflare Dashboard > AI > Gateway > Analytics
+
+#### Key Metrics
+
+- Request volume by model
+- Success/error rates
+- Latency percentiles (p50, p95, p99)
+- Token usage and costs
+- Cache hit rates
 
 ### View Pages Analytics
 
@@ -163,42 +262,60 @@ wrangler d1 execute duet-company-prod --command="SELECT * FROM users"
 wrangler d1 delete duet-company-prod
 ```
 
+### AI Gateway Issues
+
+```bash
+# Test gateway connection
+curl -X POST https://gateway.ai.cloudflare.com/v1/openai/gpt-4 \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"messages":[{"role":"user","content":"test"}]}'
+
+# Check gateway settings in dashboard
+# https://dash.cloudflare.com/ai/gateway
+```
+
 ### Custom Domain Not Working
 
 1. Verify DNS records in Cloudflare Dashboard
 2. Check SSL/TLS settings (Full mode recommended)
 3. Wait for DNS propagation (up to 24 hours)
 
-## CI/CD Pipeline
-
-The GitHub Actions workflows automate deployment:
-
-- **`.github/workflows/ci.yml`** - Runs on every push/PR
-- **`.github/workflows/deploy-web.yml`** - Deploys frontend to Pages
-- **`.github/workflows/deploy-api.yml`** - Deploys API to Workers
-- **`.github/workflows/deploy-d1.yml`** - Runs D1 migrations
-
 ## Security Checklist
 
 - [ ] API tokens are stored as secrets, not in code
 - [ ] CORS is properly configured for your domain
-- [ ] Rate limiting is enabled
+- [ ] Rate limiting is enabled in AI Gateway
 - [ ] Database migrations are tested before production
 - [ ] SSL/TLS is enabled (Full mode)
 - [ ] Web Application Firewall (WAF) rules are configured
+- [ ] AI Gateway caching is enabled
+- [ ] Budget alerts are configured
 
 ## Cost Estimation
 
-| Service | Free Tier                     | Paid Usage                         |
-| ------- | ----------------------------- | ---------------------------------- |
-| Pages   | Unlimited bandwidth           | $0/month                           |
-| Workers | 100k requests/day             | $5/month per 10M requests          |
-| D1      | 5GB storage, 25M reads/day    | $0.25/GB-month, $0.50 per 1M reads |
-| KV      | 100k reads/day, 1k writes/day | $0.50 per 1M reads                 |
+| Service    | Free Tier                     | Paid Usage                         |
+| ---------- | ----------------------------- | ---------------------------------- |
+| Pages      | Unlimited bandwidth           | $0/month                           |
+| Workers    | 100k requests/day             | $5/month per 10M requests          |
+| D1         | 5GB storage, 25M reads/day    | $0.25/GB-month, $0.50 per 1M reads |
+| KV         | 100k reads/day, 1k writes/day | $0.50 per 1M reads                 |
+| AI Gateway | 100k requests/month           | $5 per 1M requests                 |
 
-Estimated cost for small production: **$0-20/month**
+Estimated cost for small production: **$0-30/month**
+
+### AI Costs
+
+| Model           | Input (1M tokens) | Output (1M tokens) |
+| --------------- | ----------------- | ------------------ |
+| GPT-4 Turbo     | $10.00            | $30.00             |
+| Claude 3 Opus   | $15.00            | $75.00             |
+| Claude 3 Sonnet | $3.00             | $15.00             |
+| GPT-3.5 Turbo   | $0.50             | $1.50              |
 
 ## Next Steps
 
 - [API Documentation](../api/rest-api.md) - API reference
 - [Company Documentation](../company/vision.md) - About Duet Company
+- [AI Gateway Guide](../../infrastructure/cloudflare/ai-gateway/README.md) - AI
+  Gateway setup
