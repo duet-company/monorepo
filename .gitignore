@@ -57,3 +57,4 @@ yarn-error.log*
 # Kubernetes
 *.kubeconfig
 secrets/
+apps/web/.next
